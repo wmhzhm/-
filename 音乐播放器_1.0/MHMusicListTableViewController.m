@@ -79,6 +79,7 @@
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
         cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:188/255  green:32/255 blue:3/255 alpha:0.11];
+        cell.detailTextLabel.text = musicList.singName;
         //设置cell背景透明
         cell.backgroundColor = [UIColor clearColor];
     }

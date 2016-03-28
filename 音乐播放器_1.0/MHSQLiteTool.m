@@ -118,8 +118,10 @@
     NSMutableArray *musicLists = nil;
     //定义sql语句
 #pragma mark - 未修复SQL注入漏洞
-    NSString *sql_1 = [NSString stringWithFormat:@"select name from t_FM where title='%@';",title];
-    const char *sql = sql_1.UTF8String;
+//    NSString *sql_1 = [NSString stringWithFormat:@"select name from t_FM where title='%@';",title];
+    
+    NSString *sql_2 = [NSString stringWithFormat:@"select t_music.name,signer,filename,singericon,lrcname from t_music,t_FM where t_music.name = t_FM.name and title='%@';",title];
+    const char *sql = sql_2.UTF8String;
     //定义结果集stmt
     sqlite3_stmt *stmt = NULL;
     //检测SQL语句的合法性
@@ -130,9 +132,22 @@
         while (sqlite3_step(stmt) == SQLITE_ROW) {//查询到数据的时候
             //获得该行的数据
             MHMusicList *musicList = [[MHMusicList alloc] init];
-            //获得第0列的
+            //获得第0列的歌名
             const unsigned char *fTitle = sqlite3_column_text(stmt, 0);
             musicList.singName = [NSString stringWithUTF8String:(const char*)fTitle];
+            //获取第一列的歌手
+             const unsigned char *fSigner = sqlite3_column_text(stmt, 1);
+            musicList.singer = [NSString stringWithUTF8String:(const char*)fSigner];
+            //获取第二列的文件名
+             const unsigned char *fFileName = sqlite3_column_text(stmt, 2);
+            musicList.fileName = [NSString stringWithUTF8String:(const char*)fFileName];
+            //获取第三列的歌曲图片名
+             const unsigned char *fSingerIcon = sqlite3_column_text(stmt, 3);
+            musicList.singerIcon = [NSString stringWithUTF8String:(const char*)fSingerIcon];
+            //获取第四列的歌词文件名
+             const unsigned char *fLrcName = sqlite3_column_text(stmt, 4);
+            musicList.lrcName = [NSString stringWithUTF8String:(const char*)fLrcName];
+            
             //把分组数据添加到数组
             [musicLists addObject:musicList];
         }
