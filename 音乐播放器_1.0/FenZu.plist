@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>title</key>
+		<string>本地音乐</string>
+		<key>icon</key>
+		<string>myMusic</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>我的最爱</string>
+		<key>icon</key>
+		<string>favoriteMusic</string>
+	</dict>
+	<dict>
+		<key>title</key>
+		<string>下载音乐</string>
+		<key>icon</key>
+		<string>downloadMusic</string>
+	</dict>
+</array>
+</plist>

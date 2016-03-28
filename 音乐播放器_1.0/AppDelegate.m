@@ -16,8 +16,12 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
-    return YES;
+    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nvg_bg_1"] forBarMetrics:UIBarMetricsDefault];
+    
+    [NSThread sleepForTimeInterval:2.0];
+    [_window makeKeyAndVisible];
+    
+    return  YES;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -41,5 +45,10 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+//- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+//{
+//    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"nva_bar"] forBarMetrics:UIBarMetricsDefault];
+//    return  YES;
+//}
 
 @end
