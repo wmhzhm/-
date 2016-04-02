@@ -10,7 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 @interface MHAudioTool : NSObject
 //播放音乐文件
-+ (BOOL)playMusic:(NSString *)fileName;
++ (AVAudioPlayer *)playMusic:(NSString *)fileName;
 //暂停播放
 + (void)pauseMusic:(NSString *)fileName;
 //停止播放音乐文件

@@ -34,9 +34,9 @@ static NSMutableDictionary *_soundIDs;
 
 
 //播放音乐文件
-+ (BOOL)playMusic:(NSString *)fileName
++ (AVAudioPlayer *)playMusic:(NSString *)fileName
 {
-    if (!fileName) return NO;//如果没有传入文件名，那么直接返回
+    if (!fileName) return nil;//如果没有传入文件名，那么直接返回空
          //1.取出对应的播放器
          AVAudioPlayer *player=[self musicPlayers][fileName];
     
@@ -45,14 +45,14 @@ static NSMutableDictionary *_soundIDs;
                  //2.1音频文件的URL
                  NSURL *url=[[NSBundle mainBundle]URLForResource:fileName withExtension:nil];
              if (!url){
-                return NO;//如果url为空，那么直接返回
+                return nil;//如果url为空，那么直接返回空
              }
                  //2.2创建播放器
                  player=[[AVAudioPlayer alloc]initWithContentsOfURL:url error:nil];
                 //2.3缓冲
              if (![player prepareToPlay]) {
-                 //如果缓冲失败，那么就直接返回
-                 return NO;
+                 //如果缓冲失败，那么就直接返回空
+                 return nil;
              }
                  //2.4存入字典
                  [self musicPlayers][fileName]=player;
@@ -60,10 +60,10 @@ static NSMutableDictionary *_soundIDs;
          //3.播放
         if (![player isPlaying]) {
                 //如果当前没处于播放状态，那么就播放
-                return [player play];
+                [player play];
             }
     
-         return YES;//正在播放，那么就返回YES
+         return player;//正在播放，那么就返回播放器
 }
 
 //暂停播放

@@ -62,8 +62,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rj4-fd-b2I" userLabel="底部">
                     <rect key="frame" x="0.0" y="480" width="600" height="120"/>
                     <subviews>
-                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H8g-wS-JQk" userLabel="进度条">
+                        <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H8g-wS-JQk" userLabel="进度条">
                             <rect key="frame" x="10" y="5" width="580" height="2"/>
+                            <gestureRecognizers/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="uZb-bU-aQa" appends="YES" id="DQd-4U-vtS"/>
+                            </connections>
                         </progressView>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V78-ms-I5c" userLabel="play">
                             <rect key="frame" x="260" y="20" width="80" height="79"/>
@@ -109,13 +113,18 @@
                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sbp-Tx-Vc2" userLabel="滑块">
-                            <rect key="frame" x="115" y="0.0" width="35" height="15"/>
+                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sbp-Tx-Vc2" userLabel="滑块">
+                            <rect key="frame" x="10" y="0.0" width="35" height="15"/>
+                            <gestureRecognizers/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="15" id="a3G-96-BBE"/>
                                 <constraint firstAttribute="width" constant="35" id="oFf-lV-zuE"/>
                             </constraints>
                             <state key="normal" image="slider_btn"/>
+                            <state key="highlighted" image="slider_btn"/>
+                            <connections>
+                                <outletCollection property="gestureRecognizers" destination="V2f-69-X6m" appends="YES" id="dCu-Vg-1sk"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.7482194096" green="0.77724865210000005" blue="0.822265625" alpha="1" colorSpace="calibratedRGB"/>
@@ -132,7 +141,6 @@
                         <constraint firstItem="WAx-0K-TVb" firstAttribute="centerY" secondItem="Rj4-fd-b2I" secondAttribute="centerY" id="XM9-S7-HMq"/>
                         <constraint firstItem="H8g-wS-JQk" firstAttribute="leading" secondItem="Rj4-fd-b2I" secondAttribute="leading" constant="10" id="dTZ-Bz-hhD"/>
                         <constraint firstItem="V78-ms-I5c" firstAttribute="centerX" secondItem="Rj4-fd-b2I" secondAttribute="centerX" id="eRk-UT-aMh"/>
-                        <constraint firstItem="Sbp-Tx-Vc2" firstAttribute="leading" secondItem="WAx-0K-TVb" secondAttribute="trailing" constant="15" id="n1R-wX-u4J"/>
                         <constraint firstItem="WAx-0K-TVb" firstAttribute="leading" secondItem="Rj4-fd-b2I" secondAttribute="leading" constant="40" id="pFM-j9-FJ2"/>
                         <constraint firstItem="rzw-XA-Dnt" firstAttribute="leading" secondItem="Rj4-fd-b2I" secondAttribute="leading" id="ye8-P4-NnD"/>
                     </constraints>
@@ -151,6 +159,16 @@
             </constraints>
             <point key="canvasLocation" x="167" y="140"/>
         </view>
+        <panGestureRecognizer minimumNumberOfTouches="1" id="V2f-69-X6m">
+            <connections>
+                <action selector="panSlider:" destination="-1" id="XWA-28-1us"/>
+            </connections>
+        </panGestureRecognizer>
+        <tapGestureRecognizer id="uZb-bU-aQa">
+            <connections>
+                <action selector="tapProgress:" destination="-1" id="ekU-cE-cjy"/>
+            </connections>
+        </tapGestureRecognizer>
     </objects>
     <resources>
         <image name="back_btn" width="24" height="24"/>
