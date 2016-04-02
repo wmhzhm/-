@@ -10,10 +10,12 @@
 #import <sqlite3.h>
 #import "MHSQLiteTool.h"
 #import "MHMusicList.h"
-
+#import "MHPlayingViewController.h"
+#import "MHMusicTool.h"
 
 @interface MHMusicListTableViewController ()
 @property (strong ,nonatomic) NSMutableArray *musicList;
+@property (strong ,nonatomic) MHPlayingViewController *playingViewController;
 @end
 
 @implementation MHMusicListTableViewController
@@ -28,35 +30,37 @@
     self.navigationItem.titleView.backgroundColor = [UIColor blackColor];
     //    self.separatorStyle = UITableViewCellSelectionStyleNone;
     self.tableView.separatorStyle = UITableViewCellSelectionStyleNone;
-    
-    
 }
 
 - (BOOL)prefersStatusBarHidden
 {
     return YES;
 }
+
+//懒加载保证只有一个实体存在
+- (MHPlayingViewController *)playingViewController
+{
+    if (_playingViewController == nil) {
+        _playingViewController = [[MHPlayingViewController alloc] init];
+    }
+    return _playingViewController;
+}
+
 - (NSMutableArray *)musicList
 {
         if (_musicList == nil) {
-
             NSArray *dictArray = [MHSQLiteTool musicListWithTitle:self.title];
             NSMutableArray *musicLists = [NSMutableArray array];
             for (MHMusicList *musicList in dictArray) {
                 [musicLists addObject:musicList];
-//                //加载Frame模型
-//                MHFenZuFrame *msg = [[MHFenZuFrame alloc] init];
-//                msg.fenZu = fenZu;
-//                
-//                [fenZuFrameArray addObject:msg];
-//            }
-//            _fenZuFrame = fenZuFrameArray;
             }
             _musicList = musicLists;
         }
     return _musicList;
 }
-    
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -85,6 +89,21 @@
     }
     return cell;
 }
+
+
+#pragma  mark - TableView Delegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    //设置播放歌曲数据
+    MHMusicTool *musicTool = [[MHMusicTool alloc] init];
+    musicTool.title = self.title;
+    
+    [MHMusicTool setPlayingMusic:[MHMusicTool musics][indexPath.row]];
+    
+    [self.playingViewController show];
+}
+
 
 
 /*

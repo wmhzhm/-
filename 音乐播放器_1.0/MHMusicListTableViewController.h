@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 @class MHMusicList;
+@class MHMusicTool;
 @interface MHMusicListTableViewController : UITableViewController
 
++ (NSMutableArray *)musics;
 
 @end

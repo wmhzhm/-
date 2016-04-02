@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B29AC741CA91AC800F5652B /* MHPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B29AC721CA91AC800F5652B /* MHPlayingViewController.m */; };
+		8B29AC751CA91AC800F5652B /* MHPlayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B29AC731CA91AC800F5652B /* MHPlayingViewController.xib */; };
+		8B2FFFB91CAA86E800533783 /* MHMusicTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2FFFB81CAA86E800533783 /* MHMusicTool.m */; };
+		8B2FFFBC1CAB5F5800533783 /* MHAudioTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2FFFBB1CAB5F5800533783 /* MHAudioTool.m */; };
 		8B5C30D81C9FCBFB00DBB050 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B5C30D71C9FCBFB00DBB050 /* libsqlite3.tbd */; };
 		8B5C30DB1C9FD68000DBB050 /* MHSQLiteTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C30DA1C9FD68000DBB050 /* MHSQLiteTool.m */; };
 		8B5C30E11CA02AB000DBB050 /* MHFenZu.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B5C30E01CA02AB000DBB050 /* MHFenZu.m */; };
@@ -69,6 +73,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B29AC711CA91AC800F5652B /* MHPlayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPlayingViewController.h; sourceTree = "<group>"; };
+		8B29AC721CA91AC800F5652B /* MHPlayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPlayingViewController.m; sourceTree = "<group>"; };
+		8B29AC731CA91AC800F5652B /* MHPlayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHPlayingViewController.xib; sourceTree = "<group>"; };
+		8B2FFFB71CAA86E800533783 /* MHMusicTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMusicTool.h; sourceTree = "<group>"; };
+		8B2FFFB81CAA86E800533783 /* MHMusicTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMusicTool.m; sourceTree = "<group>"; };
+		8B2FFFBA1CAB5F5800533783 /* MHAudioTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHAudioTool.h; sourceTree = "<group>"; };
+		8B2FFFBB1CAB5F5800533783 /* MHAudioTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHAudioTool.m; sourceTree = "<group>"; };
 		8B5C30D71C9FCBFB00DBB050 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		8B5C30D91C9FD68000DBB050 /* MHSQLiteTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSQLiteTool.h; sourceTree = "<group>"; };
 		8B5C30DA1C9FD68000DBB050 /* MHSQLiteTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSQLiteTool.m; sourceTree = "<group>"; };
@@ -251,6 +262,9 @@
 				8BB6DC131C993A1C00AC4787 /* MHFenZuCell.m */,
 				8B850F991CA2A78D0087E932 /* MHMusicListCell.h */,
 				8B850F9A1CA2A78D0087E932 /* MHMusicListCell.m */,
+				8B29AC711CA91AC800F5652B /* MHPlayingViewController.h */,
+				8B29AC721CA91AC800F5652B /* MHPlayingViewController.m */,
+				8B29AC731CA91AC800F5652B /* MHPlayingViewController.xib */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -281,6 +295,10 @@
 				8BB6DBD11C98F2B700AC4787 /* AppDelegate.m */,
 				8B5C30D91C9FD68000DBB050 /* MHSQLiteTool.h */,
 				8B5C30DA1C9FD68000DBB050 /* MHSQLiteTool.m */,
+				8B2FFFB71CAA86E800533783 /* MHMusicTool.h */,
+				8B2FFFB81CAA86E800533783 /* MHMusicTool.m */,
+				8B2FFFBA1CAB5F5800533783 /* MHAudioTool.h */,
+				8B2FFFBB1CAB5F5800533783 /* MHAudioTool.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -416,6 +434,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B29AC751CA91AC800F5652B /* MHPlayingViewController.xib in Resources */,
 				8BB6DBDD1C98F2B700AC4787 /* LaunchScreen.storyboard in Resources */,
 				8BB6DBDA1C98F2B700AC4787 /* Assets.xcassets in Resources */,
 				8BB6DC3F1C993CCA00AC4787 /* test.wav in Resources */,
@@ -470,15 +489,18 @@
 				8BB6DC0A1C98F3AA00AC4787 /* MHNavigationController.m in Sources */,
 				8BB6DC071C98F35500AC4787 /* MHTabBarController.m in Sources */,
 				8B850F9B1CA2A78D0087E932 /* MHMusicListCell.m in Sources */,
+				8B29AC741CA91AC800F5652B /* MHPlayingViewController.m in Sources */,
 				8BB6DBD51C98F2B700AC4787 /* ViewController.m in Sources */,
 				8B5C30DB1C9FD68000DBB050 /* MHSQLiteTool.m in Sources */,
 				8B5C30E11CA02AB000DBB050 /* MHFenZu.m in Sources */,
 				8BB6DBD21C98F2B700AC4787 /* AppDelegate.m in Sources */,
 				8BB6DC151C993A1C00AC4787 /* MHFenZuCell.m in Sources */,
 				8B84CB3D1CA28315000078DC /* MHMusicListTableViewController.m in Sources */,
+				8B2FFFB91CAA86E800533783 /* MHMusicTool.m in Sources */,
 				8BB6DC491C99524A00AC4787 /* MHFenZuFrame.m in Sources */,
 				8BB6DBCF1C98F2B700AC4787 /* main.m in Sources */,
 				8BB6DC111C98F43E00AC4787 /* MHOnlineMusicController.m in Sources */,
+				8B2FFFBC1CAB5F5800533783 /* MHAudioTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

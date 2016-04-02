@@ -12,7 +12,5 @@
 @property (copy ,nonatomic) NSString *title;
 @property (copy ,nonatomic) NSString *icon;
 
-+ (instancetype) fenZuWithDict:(NSDictionary *)dict;
-- (instancetype) initWithDict:(NSDictionary *)dict;
 
 @end

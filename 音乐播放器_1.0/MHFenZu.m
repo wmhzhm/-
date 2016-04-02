@@ -9,16 +9,5 @@
 #import "MHFenZu.h"
 
 @implementation MHFenZu
-+ (instancetype) fenZuWithDict:(NSDictionary *)dict
-{
-    return [[self alloc] initWithDict:dict];
-}
-- (instancetype) initWithDict:(NSDictionary *)dict
-{
-    if (self = [super init]) {
-        self.title = dict[@"title"];
-        self.icon = dict[@"icon"];
-    }
-    return self;
-}
+
 @end
