@@ -18,7 +18,8 @@
 
 //所有的歌曲
 + (NSArray *)musics;
-
+//返回播放歌曲所在组的内部序列
++ (NSUInteger)playingIndex;
 //返回正在播放的歌曲
 + (MHMusicList*)playingMusic;
 //设置音乐播放

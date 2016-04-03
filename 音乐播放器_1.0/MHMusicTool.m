@@ -86,13 +86,36 @@ static  MHMusicList *_playingMusic;
 //    }//endElse
 }
 
++ (NSUInteger)playingIndex
+{
+    NSMutableArray *musicNameList = [NSMutableArray array];
+    NSArray *musicList;
+    for (MHMusicList *array in [MHMusicTool musics]) {
+        [musicNameList addObject:array.fileName];
+    }
+    musicList = musicNameList;
+    
+    NSUInteger playingIndex = [musicList indexOfObject:_playingMusic.fileName];
+    //设置下一首音乐的索引
+
+    return playingIndex;
+}
+
 //下一首歌曲
 + (MHMusicList *)nextMusic
 {
-    NSInteger nextIndex = 0;
+    NSUInteger nextIndex = 0;
+   
       if (_playingMusic) {
-             //获取当前播放音乐的索引
-              NSInteger playingIndex = [[self musics] indexOfObject:_playingMusic];
+//          NSMutableArray *musicNameList = [NSMutableArray array];
+//          NSArray *musicList;
+//          for (MHMusicList *array in [self musics]) {
+//              [musicNameList addObject:array.fileName];
+//          }
+//          musicList = musicNameList;
+//          
+//          NSUInteger playingIndex = [musicList indexOfObject:_playingMusic.fileName];
+          NSUInteger playingIndex = [self playingIndex];
               //设置下一首音乐的索引
             nextIndex = playingIndex+1;
                 //检查数组越界，如果下一首音乐是最后一首，那么重置为0
@@ -109,7 +132,7 @@ static  MHMusicList *_playingMusic;
       NSInteger previousIndex = 0;
       if (_playingMusic) {
               //获取当前播放音乐的索引
-              NSInteger playingIndex = [[self musics] indexOfObject:_playingMusic];
+          NSInteger playingIndex = [self playingIndex];
                 //设置下一首音乐的索引
                previousIndex = playingIndex-1;
                //检查数组越界，如果下一首音乐是最后一首，那么重置为0

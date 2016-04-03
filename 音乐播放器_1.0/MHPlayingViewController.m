@@ -24,9 +24,13 @@
 @property (strong ,nonatomic) AVAudioPlayer *player;
 //定时器
 @property (strong ,nonatomic) NSTimer *currentTimeTimer;
+@property (weak, nonatomic) IBOutlet UIButton *playOrPauseButton;
 
 - (IBAction)tapProgress:(UITapGestureRecognizer *)sender;
 - (IBAction)panSlider:(UIPanGestureRecognizer *)sender;
+- (IBAction)previous;
+- (IBAction)next;
+- (IBAction)playOrPause;
 
 @end
 
@@ -219,6 +223,70 @@ static MHMusicList *playingMusic;
     //添加定时器
     [self addCurrentTimeTimer];
     }
+}
+
+//上一首歌曲
+- (IBAction)previous {
+    //开始播放之前先警用一切app点击事件，防止误操作
+     UIWindow *window=[[UIApplication sharedApplication].windows lastObject];
+    window.userInteractionEnabled = NO;
+    
+    //重置当前的歌曲
+    [self ResetPlayingMusic];
+    
+    //获得上一首歌曲
+    [MHMusicTool setPlayingMusic:[MHMusicTool perviousMusic]];
+    
+    //播放
+    [self startPlayingMusic];
+    
+    //恢复app点击功能
+    window.userInteractionEnabled = YES;
+}
+
+//下一首歌曲
+- (IBAction)next {
+    //开始播放之前先警用一切app点击事件，防止误操作
+    UIWindow *window=[[UIApplication sharedApplication].windows lastObject];
+    window.userInteractionEnabled = NO;
+    
+    //重置当前的歌曲
+    [self ResetPlayingMusic];
+    
+    //获得下一首歌曲
+    [MHMusicTool setPlayingMusic:[MHMusicTool nextMusic]];
+    
+    //播放
+    [self startPlayingMusic];
+    
+    //恢复app点击功能
+    window.userInteractionEnabled = YES;
+    
+}
+
+//暂停或播放
+- (IBAction)playOrPause {
+    if (!self.playOrPauseButton.isSelected) {//暂停播放
+        self.playOrPauseButton.selected = YES;
+        //改变图标
+//        self.playOrPauseButton.imageView.image = [UIImage imageNamed:@"pause_btn"];
+        [self.playOrPauseButton setImage:[UIImage imageNamed:@"pause_btn"] forState:UIControlStateNormal];
+        //暂停
+        [MHAudioTool pauseMusic:playingMusic.fileName];
+        //移除定时器
+        [self removeCurrentTime];
+    }else
+    {
+        self.playOrPauseButton.selected = NO;
+        //改变图标
+//        self.playOrPauseButton.imageView.image = [UIImage imageNamed:@"play_btn"];
+        [self.playOrPauseButton setImage:[UIImage imageNamed:@"play_btn"] forState:UIControlStateNormal];
+        //播放
+        [MHAudioTool playMusic:playingMusic.fileName];
+        //添加定时器
+        [self addCurrentTimeTimer];
+    }
+    
 }
 
 

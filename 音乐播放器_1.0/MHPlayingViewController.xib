@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="currentTimeLabel" destination="rzw-XA-Dnt" id="Ytm-QR-QQn"/>
                 <outlet property="iconView" destination="DkW-38-mh1" id="RIQ-sc-EmK"/>
+                <outlet property="playOrPauseButton" destination="V78-ms-I5c" id="C4P-pH-l0S"/>
                 <outlet property="progressView" destination="H8g-wS-JQk" id="tbL-eV-JIn"/>
                 <outlet property="slider" destination="Sbp-Tx-Vc2" id="9QC-Nh-Zm1"/>
                 <outlet property="totalTimeLabel" destination="XiK-kd-skL" id="VIz-Ky-b7V"/>
@@ -76,6 +77,9 @@
                                 <constraint firstAttribute="width" constant="80" id="PQ3-IS-WvM"/>
                             </constraints>
                             <state key="normal" image="play_btn"/>
+                            <connections>
+                                <action selector="playOrPause" destination="-1" eventType="touchUpInside" id="w9w-tg-WOF"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WAx-0K-TVb" userLabel="previous">
                             <rect key="frame" x="40" y="30" width="60" height="60"/>
@@ -84,6 +88,9 @@
                                 <constraint firstAttribute="height" constant="60" id="rSK-dg-oA0"/>
                             </constraints>
                             <state key="normal" image="previousMusic_btn"/>
+                            <connections>
+                                <action selector="previous" destination="-1" eventType="touchUpInside" id="qAY-lE-aq0"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q49-bD-b0d" userLabel="next">
                             <rect key="frame" x="500" y="30" width="60" height="60"/>
@@ -92,6 +99,9 @@
                                 <constraint firstAttribute="height" constant="60" id="jzr-OV-DzD"/>
                             </constraints>
                             <state key="normal" image="nextMusic_btn"/>
+                            <connections>
+                                <action selector="next" destination="-1" eventType="touchUpInside" id="itt-xH-NFI"/>
+                            </connections>
                         </button>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XiK-kd-skL" userLabel="总时长">
                             <rect key="frame" x="520" y="10" width="80" height="21"/>
