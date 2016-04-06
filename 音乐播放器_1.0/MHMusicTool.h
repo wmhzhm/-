@@ -28,5 +28,8 @@
 + (MHMusicList *)nextMusic;
 //上一首歌曲
 + (MHMusicList *)perviousMusic;
-
+//重播本首歌曲
++ (MHMusicList *)replayMusic;
+//得到列表内随机的音乐
++ (MHMusicList *)randomMusic;
 @end

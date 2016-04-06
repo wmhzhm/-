@@ -39,6 +39,11 @@
         const char *sql_2 = "create table if not exists t_FM (title text references t_fenZu(title),name text references t_music(name),primary key(title,name))";
         [MHSQLiteTool createTable:sql_2 named:@"t_FM"];
         
+        //创建循环设置表t_loopSetting
+        //
+        const char *sql_3 = "create table if not exists t_loopSetting (loop text primary key,currentLoop text)";
+        [MHSQLiteTool createTable:sql_3 named:@"t_loopSetting"];
+        
         }else{
         NSLog(@"打开数据库失败");
     }
@@ -155,6 +160,7 @@
     return musicLists;
 }
 
+
 //删除分组时操作FM表
 + (BOOL)deleteFMWithFenZu:(NSString *)title
 {
@@ -177,4 +183,52 @@
     }
     return result == SQLITE_OK;
 }
+
+
+//得到循坏设置的值
++ (NSString *)loopSetWorth
+{
+    NSString *loopSetWorth = nil;
+    //定义sql语句
+    NSString *sql_2 = [NSString stringWithFormat:@"select currentLoop from t_loopSetting where loop = 'nowLoop';"];
+    const char *sql = sql_2.UTF8String;
+    //定义结果集stmt
+    sqlite3_stmt *stmt = NULL;
+    //检测SQL语句的合法性
+    int result = sqlite3_prepare_v2(_db, sql, -1, &stmt, NULL);
+    if (result == SQLITE_OK) {
+        NSLog(@"查询语句合法");
+        while (sqlite3_step(stmt) == SQLITE_ROW) {//查询到数据的时候
+            //获取第0列的设置值
+            const unsigned char *fSigner = sqlite3_column_text(stmt, 0);
+            loopSetWorth = [NSString stringWithUTF8String:(const char*)fSigner];
+                    }//endWhile
+    }//endIf
+    return loopSetWorth;
+}
+
++ (BOOL)initLoopSet
+{
+    NSString *sql = [NSString stringWithFormat:@"insert into t_loopSetting (loop,currentLoop) values('%@','%@');",@"nowLoop",@"loop_all"];
+    char *errorMes = NULL;
+    int result = sqlite3_exec(_db, sql.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
+    if (result != SQLITE_OK) {
+        NSLog(@"%@",[NSString stringWithUTF8String:errorMes]);
+    }
+    return result == SQLITE_OK;
+}
+
+//更新loopSet
++ (BOOL)updateLoopSetWithModel:(NSString *)model
+{
+//    NSLog(@"要更新的模式为%@",model);
+    NSString *sql = [NSString stringWithFormat:@"update  t_loopSetting set currentLoop='%@' where loop='nowLoop';",model];
+    char *errorMes = NULL;
+    int result = sqlite3_exec(_db, sql.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
+    if (result != SQLITE_OK) {
+        NSLog(@"%@",[NSString stringWithUTF8String:errorMes]);
+    }
+    return result == SQLITE_OK;
+}
+
 @end

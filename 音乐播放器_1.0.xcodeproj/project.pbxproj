@@ -17,6 +17,10 @@
 		8B84CB3D1CA28315000078DC /* MHMusicListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B84CB3C1CA28315000078DC /* MHMusicListTableViewController.m */; };
 		8B850F981CA296E20087E932 /* MHMusicList.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B850F971CA296E20087E932 /* MHMusicList.m */; };
 		8B850F9B1CA2A78D0087E932 /* MHMusicListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B850F9A1CA2A78D0087E932 /* MHMusicListCell.m */; };
+		8B8C598F1CB4A0D200C784F3 /* DJ Smash - Moscow Never Sleeps.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8B8C598E1CB4A0D200C784F3 /* DJ Smash - Moscow Never Sleeps.mp3 */; };
+		8B8C59921CB4AB9600C784F3 /* MHLrc.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C59911CB4AB9600C784F3 /* MHLrc.m */; };
+		8B8C59951CB4ABD600C784F3 /* MHLrcTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B8C59941CB4ABD600C784F3 /* MHLrcTool.m */; };
+		8B9D616F1CB2A9AF0015C4E3 /* UIImage+MJ.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B9D616E1CB2A9AF0015C4E3 /* UIImage+MJ.m */; };
 		8BB6DBCF1C98F2B700AC4787 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6DBCE1C98F2B700AC4787 /* main.m */; };
 		8BB6DBD21C98F2B700AC4787 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6DBD11C98F2B700AC4787 /* AppDelegate.m */; };
 		8BB6DBD51C98F2B700AC4787 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6DBD41C98F2B700AC4787 /* ViewController.m */; };
@@ -91,6 +95,13 @@
 		8B850F971CA296E20087E932 /* MHMusicList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMusicList.m; sourceTree = "<group>"; };
 		8B850F991CA2A78D0087E932 /* MHMusicListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHMusicListCell.h; sourceTree = "<group>"; };
 		8B850F9A1CA2A78D0087E932 /* MHMusicListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHMusicListCell.m; sourceTree = "<group>"; };
+		8B8C598E1CB4A0D200C784F3 /* DJ Smash - Moscow Never Sleeps.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "DJ Smash - Moscow Never Sleeps.mp3"; sourceTree = "<group>"; };
+		8B8C59901CB4AB9600C784F3 /* MHLrc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHLrc.h; sourceTree = "<group>"; };
+		8B8C59911CB4AB9600C784F3 /* MHLrc.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHLrc.m; sourceTree = "<group>"; };
+		8B8C59931CB4ABD600C784F3 /* MHLrcTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHLrcTool.h; sourceTree = "<group>"; };
+		8B8C59941CB4ABD600C784F3 /* MHLrcTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHLrcTool.m; sourceTree = "<group>"; };
+		8B9D616D1CB2A9AF0015C4E3 /* UIImage+MJ.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+MJ.h"; sourceTree = "<group>"; };
+		8B9D616E1CB2A9AF0015C4E3 /* UIImage+MJ.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+MJ.m"; sourceTree = "<group>"; };
 		8BB6DBCA1C98F2B700AC4787 /* 音乐播放器_1.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "音乐播放器_1.0.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BB6DBCE1C98F2B700AC4787 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8BB6DBD01C98F2B700AC4787 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -251,6 +262,8 @@
 				8BB6DC481C99524A00AC4787 /* MHFenZuFrame.m */,
 				8B850F961CA296E20087E932 /* MHMusicList.h */,
 				8B850F971CA296E20087E932 /* MHMusicList.m */,
+				8B8C59901CB4AB9600C784F3 /* MHLrc.h */,
+				8B8C59911CB4AB9600C784F3 /* MHLrc.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -291,6 +304,8 @@
 		8BB6DC041C98F31200AC4787 /* Other */ = {
 			isa = PBXGroup;
 			children = (
+				8B9D616D1CB2A9AF0015C4E3 /* UIImage+MJ.h */,
+				8B9D616E1CB2A9AF0015C4E3 /* UIImage+MJ.m */,
 				8BB6DBD01C98F2B700AC4787 /* AppDelegate.h */,
 				8BB6DBD11C98F2B700AC4787 /* AppDelegate.m */,
 				8B5C30D91C9FD68000DBB050 /* MHSQLiteTool.h */,
@@ -299,6 +314,8 @@
 				8B2FFFB81CAA86E800533783 /* MHMusicTool.m */,
 				8B2FFFBA1CAB5F5800533783 /* MHAudioTool.h */,
 				8B2FFFBB1CAB5F5800533783 /* MHAudioTool.m */,
+				8B8C59931CB4ABD600C784F3 /* MHLrcTool.h */,
+				8B8C59941CB4ABD600C784F3 /* MHLrcTool.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -306,6 +323,7 @@
 		8BB6DC171C993CBB00AC4787 /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				8B8C598E1CB4A0D200C784F3 /* DJ Smash - Moscow Never Sleeps.mp3 */,
 				8BB6DC181C993CCA00AC4787 /* 李克勤 - 月半小夜曲.mp3 */,
 				8BB6DC191C993CCA00AC4787 /* 李克勤.jpg */,
 				8BB6DC1A1C993CCA00AC4787 /* 泡沫.lrc */,
@@ -457,6 +475,7 @@
 				8BB6DC341C993CCA00AC4787 /* 张译 - 稳稳的幸福.mp3 in Resources */,
 				8BB6DC2D1C993CCA00AC4787 /* 李克勤 - 月半小夜曲.mp3 in Resources */,
 				8BB6DBD81C98F2B700AC4787 /* Main.storyboard in Resources */,
+				8B8C598F1CB4A0D200C784F3 /* DJ Smash - Moscow Never Sleeps.mp3 in Resources */,
 				8BB6DC411C993CCA00AC4787 /* xpg.jpg in Resources */,
 				8BB6DC3C1C993CCA00AC4787 /* Owl City - The Saltwater Room.mp3 in Resources */,
 				8BB6DC401C993CCA00AC4787 /* The salt water room.lrc in Resources */,
@@ -488,10 +507,13 @@
 				8BB6DC0E1C98F3EC00AC4787 /* MHTableViewController.m in Sources */,
 				8BB6DC0A1C98F3AA00AC4787 /* MHNavigationController.m in Sources */,
 				8BB6DC071C98F35500AC4787 /* MHTabBarController.m in Sources */,
+				8B8C59921CB4AB9600C784F3 /* MHLrc.m in Sources */,
+				8B9D616F1CB2A9AF0015C4E3 /* UIImage+MJ.m in Sources */,
 				8B850F9B1CA2A78D0087E932 /* MHMusicListCell.m in Sources */,
 				8B29AC741CA91AC800F5652B /* MHPlayingViewController.m in Sources */,
 				8BB6DBD51C98F2B700AC4787 /* ViewController.m in Sources */,
 				8B5C30DB1C9FD68000DBB050 /* MHSQLiteTool.m in Sources */,
+				8B8C59951CB4ABD600C784F3 /* MHLrcTool.m in Sources */,
 				8B5C30E11CA02AB000DBB050 /* MHFenZu.m in Sources */,
 				8BB6DBD21C98F2B700AC4787 /* AppDelegate.m in Sources */,
 				8BB6DC151C993A1C00AC4787 /* MHFenZuCell.m in Sources */,

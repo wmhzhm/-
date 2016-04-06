@@ -50,19 +50,6 @@ static  MHMusicList *_playingMusic;
 
 + (void)setPlayingMusic:(MHMusicList *)playingMusic
 {
-//    NSLog(@"%@",playingMusic.fileName);
-    //判断是否在一个分组内
-//    BOOL isSameTitle = NO;
-//    if (playing_title == title_static) {
-//        isSameTitle = YES;
-//        NSLog(@"isSameTitle");
-//    }
-//    if (!isSameTitle) {
-//        _playingMusic=playingMusic;
-//        playing_title = title_static;
-//        return;
-//    }
-//    else{
     NSArray *music = [self musics];
     BOOL isContains = NO;
     //因为isContant是比较对象地址，而这里需要比较值，所以采用提取名字字符串(主键不会有相同的)的方法来比较
@@ -83,9 +70,10 @@ static  MHMusicList *_playingMusic;
         return;
     }
      _playingMusic=playingMusic;
-//    }//endElse
 }
 
+
+//返回播放歌曲所在组的内部序列
 + (NSUInteger)playingIndex
 {
     NSMutableArray *musicNameList = [NSMutableArray array];
@@ -107,14 +95,6 @@ static  MHMusicList *_playingMusic;
     NSUInteger nextIndex = 0;
    
       if (_playingMusic) {
-//          NSMutableArray *musicNameList = [NSMutableArray array];
-//          NSArray *musicList;
-//          for (MHMusicList *array in [self musics]) {
-//              [musicNameList addObject:array.fileName];
-//          }
-//          musicList = musicNameList;
-//          
-//          NSUInteger playingIndex = [musicList indexOfObject:_playingMusic.fileName];
           NSUInteger playingIndex = [self playingIndex];
               //设置下一首音乐的索引
             nextIndex = playingIndex+1;
@@ -125,6 +105,39 @@ static  MHMusicList *_playingMusic;
           }
     return [self musics][nextIndex];
 }
+//重播本首歌曲
++ (MHMusicList *)replayMusic
+{
+    NSUInteger nextIndex = 0;
+    
+    if (_playingMusic) {
+        NSUInteger playingIndex = [self playingIndex];
+        //设置本首音乐的索引
+        nextIndex = playingIndex;
+        //检查数组越界，如果下一首音乐是最后一首，那么重置为0
+        if (nextIndex>=[self musics].count) {
+            nextIndex=0;
+        }
+    }
+    return [self musics][nextIndex];
+}
+//随机播放
++ (MHMusicList *)randomMusic
+{
+    NSInteger count = [MHMusicTool musics].count;
+    NSUInteger randomIndex = (NSUInteger)(0 + (arc4random() % (count - 0 + 1)));
+    while (randomIndex == [self playingIndex]) {
+       randomIndex = (NSUInteger)(0 + (arc4random() % (count - 0 + 1)));
+    }
+    return [self musics][randomIndex];
+}
+
+
+//-(int)getRandomNumber:(int)from to:(int)to
+//
+//{
+//    return (int)(from + (arc4random() % (to - from + 1)));
+//}
 //上一首歌曲
 + (MHMusicList *)perviousMusic
 {

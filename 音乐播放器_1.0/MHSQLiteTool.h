@@ -17,7 +17,12 @@
 + (BOOL)deleteFenZu:(MHFenZu *)fenZu;
 + (BOOL)deleteFMWithFenZu:(NSString *)title;
 + (BOOL)deleteFMWithName:(NSString *)name;
++ (BOOL)initLoopSet;
++ (BOOL)updateLoopSetWithModel:(NSString *)model;
 + (void)createTable:(const char *)sql named:(NSString *)tableName;
+
++ (NSString *)loopSetWorth;
 + (NSArray *)fenZu;
 +(NSArray *)musicListWithTitle:(NSString *)title;
+
 @end

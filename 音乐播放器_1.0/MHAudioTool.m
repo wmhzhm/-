@@ -7,12 +7,14 @@
 //
 
 #import "MHAudioTool.h"
-
+@interface MHAudioTool()
+@end
 
 @implementation MHAudioTool
 
 //存放所有的播放器
 static NSMutableDictionary *_musicPlayers;
+
 + (NSMutableDictionary *)musicPlayers
 {
     if (_musicPlayers == nil) {
@@ -39,7 +41,7 @@ static NSMutableDictionary *_soundIDs;
     if (!fileName) return nil;//如果没有传入文件名，那么直接返回空
          //1.取出对应的播放器
          AVAudioPlayer *player=[self musicPlayers][fileName];
-    
+//        player.delegate = self;
          //2.如果播放器没有创建，那么就进行初始化
          if (!player) {
                  //2.1音频文件的URL
