@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <AVFoundation/AVFoundation.h>
 @interface MHAudioTool : NSObject
+//创建单例
++ (instancetype) sharedAudioTool;
+
 //播放音乐文件
 + (AVAudioPlayer *)playMusic:(NSString *)fileName;
 //暂停播放

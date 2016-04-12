@@ -14,6 +14,19 @@
 
 //存放所有的播放器
 static NSMutableDictionary *_musicPlayers;
+static MHAudioTool *_audioTool;
+
+
+//单例方法
++ (instancetype) sharedAudioTool
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        _audioTool = [[MHAudioTool alloc]init];
+    });
+    return _audioTool;
+}
+
 
 + (NSMutableDictionary *)musicPlayers
 {

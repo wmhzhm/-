@@ -12,6 +12,10 @@
 #import "MHMusicList.h"
 #import "UIImage+MJ.h"
 #import "MHSQLiteTool.h"
+#import "MHLrc.h"
+#import "SYBlendLabel.h"
+#import "MHLrcTool.h"
+
 
 #define progressPadding 10
 #define slider_Y self.slider.center.y
@@ -21,7 +25,7 @@
 #define random  @"random"
 
 
-@interface MHPlayingViewController ()<AVAudioPlayerDelegate>
+@interface MHPlayingViewController ()<AVAudioPlayerDelegate,UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *slider;//滑块
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;//当前时间
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;//总时长
@@ -38,6 +42,16 @@
 @property (strong ,nonatomic) NSTimer *rotateTimer;
 @property (weak, nonatomic) IBOutlet UIButton *playOrPauseButton;
 @property (weak, nonatomic) IBOutlet UIButton *loopLabel;
+@property (weak, nonatomic) IBOutlet UITableView *lrcView;
+
+
+
+//歌词数据数组
+@property (nonatomic, strong) NSArray *lyricArray;
+//当前歌词索引
+@property (nonatomic, assign) NSInteger currentLyricIndex;
+
+
 
 @property (copy ,nonatomic) NSString *loopSet;
 
@@ -58,17 +72,30 @@ static MHMusicList *playingMusic;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     // Do any additional setup after loading the view from its nib.
+   //    self.loopLabel.layer.backgroundColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
+    
+    [self settingView];
+}
+
+
+//设置各个子视图的细节
+- (void)settingView
+{
+    self.lrcView.separatorStyle = UITableViewCellSelectionStyleNone;
+    self.lrcView.backgroundColor = [UIColor clearColor];
+    
     self.loopLabel.layer.masksToBounds = YES;
     self.loopLabel.layer.cornerRadius = 12;
     self.loopLabel.backgroundColor = [UIColor blackColor];
-//    self.loopLabel.layer.backgroundColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
-    
+
     self.iconView.layer.masksToBounds = YES;
     self.iconView.layer.cornerRadius = 100;
     self.iconViewBcg.layer.masksToBounds = YES;
     self.iconViewBcg.layer.cornerRadius = 110;
     self.iconViewBcg.image = [UIImage imageNamed:@"iconViewBcg"];
+    
     //执行图片旋转
     self.rotateTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(rotate) userInfo:nil repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:_rotateTimer forMode:NSRunLoopCommonModes];
@@ -105,6 +132,7 @@ static MHMusicList *playingMusic;
     }//endElseIf
 }
 
+//返回键
 - (IBAction)exit:(id)sender {
     
     //离开时移除定时器
@@ -122,10 +150,21 @@ static MHMusicList *playingMusic;
     }];
 }
 
+//歌词控制按钮
+- (IBAction)clickLrcBtn {
+    if (self.lrcView.hidden == YES) {
+        self.lrcView.hidden = NO;
+    }else{
+        self.lrcView.hidden = YES;
+    }
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
+
 //界面显示
 - (void)show
 {
@@ -145,7 +184,6 @@ static MHMusicList *playingMusic;
     if (![willPlayedMusic isEqualToString:isPlayingMusic]) {
         [self ResetPlayingMusic];
     }
-    
 //  //3.使用逐渐显示动画让View显示
     self.view.alpha = 0;
       [UIView animateWithDuration:0.5 animations:^{
@@ -182,7 +220,13 @@ static MHMusicList *playingMusic;
         //如果是正在播放的音乐则直接返回
         return;
     }
+//    self.lyricArray = [SYLyricTool parserLyricWithName:musicModel.lrc];
     playingMusic = [MHMusicTool playingMusic];
+    self.lyricArray = [MHLrcTool parserLyricWithName:playingMusic.lrcName];
+    self.lrcView.delegate = self;
+    self.lrcView.dataSource = self;
+    [self.lrcView reloadData];
+    
     self.iconView.image = [UIImage imageNamed:playingMusic.singerIcon];
 //        self.iconView.image = [UIImage circleImageWithName:playingMusic.singerIcon borderWidth:borderWidthWorth borderColor:[UIColor blackColor]];
 #warning 还有部分数据没有设置
@@ -199,9 +243,9 @@ static MHMusicList *playingMusic;
 //时间转换字符串函数
 -(NSString *)stringWithTime:(NSTimeInterval)time
 {
-    int minute = time / 60;
-    int second = (int)time % 60;
-    return [NSString stringWithFormat:@"%02d:%02d",minute,second];
+    NSInteger minute = time / 60;
+    NSInteger second = (int)time % 60;
+    return [NSString stringWithFormat:@"%02ld:%02ld",minute,second];
 }
 
 
@@ -214,6 +258,7 @@ static MHMusicList *playingMusic;
     
     //创建一个每一秒调用一次的定时器
     self.currentTimeTimer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(updateCurrentTime) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:_currentTimeTimer forMode:NSRunLoopCommonModes];
 }
 
 //移除定时器
@@ -223,6 +268,7 @@ static MHMusicList *playingMusic;
     //清空定时器
     self.currentTimeTimer = nil;
 }
+
 //更新播放进度
 -(void)updateCurrentTime
 {
@@ -239,8 +285,26 @@ static MHMusicList *playingMusic;
 //    if ((int)self.player.currentTime == (int)self.player.duration) {
 //        [self next];
 //    }
-    
+    [self updateLyric];
 }
+
+#pragma mark 更新歌词信息
+-(void)updateLyric{
+    
+    for (int i = 0; i < self.lyricArray.count; i++) {
+        
+        // 找到被遍历的字典
+        NSDictionary *dic = self.lyricArray[i];
+        
+        // [[dic allKeys]lastObject]找到字典中的字符串Key
+        if ([[self stringWithTime:self.currentPlayer.currentTime] isEqualToString:[[dic allKeys]lastObject]]) {
+            NSLog(@"self.currentPlayer.currentTime: %@ \n lyricArray.currentTime: %@ \n",[self stringWithTime:self.currentPlayer.currentTime],[[dic allKeys]lastObject]);
+            [self.lrcView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
+        }
+    }
+}
+
+
 
 //点击进度条
 - (IBAction)tapProgress:(UITapGestureRecognizer *)sender {
@@ -253,6 +317,8 @@ static MHMusicList *playingMusic;
     [self updateCurrentTime];
 }
 
+
+//拖动进度条
 - (IBAction)panSlider:(UIPanGestureRecognizer *)sender {
     //获得挪动的距离
     CGPoint panedLength = [sender translationInView:sender.view];
@@ -474,5 +540,44 @@ static MHMusicList *playingMusic;
         }//endElseIf
     }
 }
+
+#pragma mark - UITableView delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.lyricArray.count;
+}
+
+#pragma mark - UITableView datasource
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *ID = @"LrcCell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        cell.backgroundColor = [UIColor clearColor];
+        cell.textLabel.textColor = [UIColor whiteColor];
+    }
+    NSDictionary *dic = self.lyricArray[indexPath.row];
+    
+    cell.textLabel.text = dic.allValues[0];
+    
+    cell.textLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [cell.textLabel setNumberOfLines:0];
+    
+    cell.textLabel.font = [UIFont systemFontOfSize:15.0];
+    
+    // 设置文字高亮颜色
+    cell.textLabel.highlightedTextColor = [UIColor colorWithRed:0.2 green:0.3 blue:0.9 alpha:1];
+    
+    // 设置被选取的cell
+    UIView *view = [[UIView alloc]initWithFrame:cell.contentView.frame];
+    view.backgroundColor = [UIColor clearColor];
+    cell.selectedBackgroundView = view;
+    
+    return cell;
+}
+
+
 
 @end

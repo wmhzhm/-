@@ -13,6 +13,7 @@
                 <outlet property="iconViewBcg" destination="xCW-q4-gub" id="86P-rn-yjT"/>
                 <outlet property="loopBtn" destination="Gyw-gN-Dnr" id="kIX-nH-Nxn"/>
                 <outlet property="loopLabel" destination="CFq-jd-X8o" id="YLP-Sm-tpE"/>
+                <outlet property="lrcView" destination="dhU-Hh-0VI" id="HGg-Pf-j9a"/>
                 <outlet property="playOrPauseButton" destination="V78-ms-I5c" id="C4P-pH-l0S"/>
                 <outlet property="progressView" destination="H8g-wS-JQk" id="tbL-eV-JIn"/>
                 <outlet property="slider" destination="Sbp-Tx-Vc2" id="9QC-Nh-Zm1"/>
@@ -48,7 +49,7 @@
                         </imageView>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gI9-6y-Va1" userLabel="歌曲图片">
                             <rect key="frame" x="200" y="140" width="200" height="200"/>
-                            <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="200" id="1ZT-Zy-5co"/>
                                 <constraint firstAttribute="width" constant="200" id="hKW-UH-CqY"/>
@@ -68,8 +69,23 @@
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RYO-4r-wHM" userLabel="歌词控制">
                             <rect key="frame" x="542" y="30" width="28" height="27"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="27" id="fB3-PV-14B"/>
+                                <constraint firstAttribute="width" constant="28" id="sg3-Ia-KeI"/>
+                            </constraints>
                             <state key="normal" image="lrcIcon_btn"/>
+                            <connections>
+                                <action selector="clickLrcBtn" destination="-1" eventType="touchUpInside" id="eQe-E0-mh3"/>
+                            </connections>
                         </button>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dhU-Hh-0VI" userLabel="歌词视图">
+                            <rect key="frame" x="140" y="70" width="320" height="400"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="320" id="MQx-vw-nJ7"/>
+                                <constraint firstAttribute="height" constant="400" id="Om6-Gz-lfU"/>
+                            </constraints>
+                        </tableView>
                     </subviews>
                     <color key="backgroundColor" red="0.61452567999999996" green="0.88373628719999997" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
@@ -81,6 +97,8 @@
                         <constraint firstItem="CFq-jd-X8o" firstAttribute="centerX" secondItem="eml-yV-MSR" secondAttribute="centerX" id="UcO-LN-wa5"/>
                         <constraint firstItem="K1O-NA-ph3" firstAttribute="top" secondItem="eml-yV-MSR" secondAttribute="top" constant="30" id="V5R-U1-VIs"/>
                         <constraint firstItem="xCW-q4-gub" firstAttribute="centerX" secondItem="eml-yV-MSR" secondAttribute="centerX" id="ddT-SB-FIB"/>
+                        <constraint firstAttribute="bottom" secondItem="dhU-Hh-0VI" secondAttribute="bottom" constant="10" id="ikg-Sx-Ey2"/>
+                        <constraint firstItem="dhU-Hh-0VI" firstAttribute="centerX" secondItem="eml-yV-MSR" secondAttribute="centerX" id="llM-dL-gxR"/>
                         <constraint firstAttribute="bottom" secondItem="CFq-jd-X8o" secondAttribute="bottom" constant="15" id="qav-Nb-jIi"/>
                         <constraint firstItem="RYO-4r-wHM" firstAttribute="top" secondItem="eml-yV-MSR" secondAttribute="top" constant="30" id="sRA-fC-Fbf"/>
                     </constraints>
@@ -148,7 +166,7 @@
                                 <constraint firstAttribute="width" constant="80" id="Q0x-qh-OWG"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rzw-XA-Dnt" userLabel="当前时长">
@@ -158,7 +176,7 @@
                                 <constraint firstAttribute="height" constant="21" id="g0S-BO-cwe"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gyw-gN-Dnr" userLabel="循环设置">
