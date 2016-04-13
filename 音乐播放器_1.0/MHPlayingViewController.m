@@ -26,6 +26,7 @@
 
 
 @interface MHPlayingViewController ()<AVAudioPlayerDelegate,UITableViewDataSource,UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollerView;
 @property (weak, nonatomic) IBOutlet UIButton *slider;//滑块
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;//当前时间
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;//总时长
@@ -33,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;//背景图片
 //@property (strong ,nonatomic) MHMusicList *playingMusic;
 @property (weak, nonatomic) IBOutlet UIImageView *iconViewBcg;
+@property (weak, nonatomic) IBOutlet UIImageView *iconViewWcg;
 //循环设置按钮
 @property (weak, nonatomic) IBOutlet UIButton *loopBtn;
 //音乐器播放对象
@@ -65,10 +67,20 @@
 @end
 
 @implementation MHPlayingViewController
+static bool lrcSet;
 static MHMusicList *playingMusic;
 //static NSString *loopSet;
 
 //static AVAudioPlayer *player;
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+//  self.scrollerView.contentSize = CGSizeMake(self.view.bounds.size.width * 2, 0);
+    [self.scrollerView setContentSize:CGSizeMake(self.view.bounds.size.width * 2, 0)];
+    NSLog(@"ContentSize :%@",NSStringFromCGSize(self.scrollerView.contentSize));
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -92,9 +104,15 @@ static MHMusicList *playingMusic;
 
     self.iconView.layer.masksToBounds = YES;
     self.iconView.layer.cornerRadius = 100;
+    
+    
     self.iconViewBcg.layer.masksToBounds = YES;
-    self.iconViewBcg.layer.cornerRadius = 110;
-    self.iconViewBcg.image = [UIImage imageNamed:@"iconViewBcg"];
+//    self.iconViewBcg.layer.cornerRadius = 110;
+//    self.iconViewBcg.image = [UIImage imageNamed:@"iconViewBcg"];
+    
+    self.iconViewWcg.layer.masksToBounds = YES;
+    self.iconViewWcg.layer.cornerRadius = 134;
+    self.iconViewWcg.alpha = 0.6;
     
     //执行图片旋转
     self.rotateTimer = [NSTimer scheduledTimerWithTimeInterval:0.02 target:self selector:@selector(rotate) userInfo:nil repeats:YES];
@@ -108,6 +126,13 @@ static MHMusicList *playingMusic;
     self.loopSet = [MHSQLiteTool loopSetWorth];
     
     [self setLoopBtnImage];
+    
+    self.scrollerView.showsHorizontalScrollIndicator = NO;
+//    self.scrollerView.contentSize = CGSizeMake(self.view.bounds.size.width * 2, 0);
+    
+    self.lrcView.showsVerticalScrollIndicator = NO;
+    
+    lrcSet = NO;
 }
 
 //实现图片旋转
@@ -152,10 +177,13 @@ static MHMusicList *playingMusic;
 
 //歌词控制按钮
 - (IBAction)clickLrcBtn {
-    if (self.lrcView.hidden == YES) {
-        self.lrcView.hidden = NO;
+    if (lrcSet == NO) {
+    NSInteger b = self.view.frame.size.width;
+    [self.scrollerView setContentOffset:CGPointMake(b, 0) animated:YES];
+        lrcSet = YES;
     }else{
-        self.lrcView.hidden = YES;
+        [self.scrollerView setContentOffset:CGPointMake(0, 0) animated:YES];
+        lrcSet = NO;
     }
 }
 
@@ -298,13 +326,11 @@ static MHMusicList *playingMusic;
         
         // [[dic allKeys]lastObject]找到字典中的字符串Key
         if ([[self stringWithTime:self.currentPlayer.currentTime] isEqualToString:[[dic allKeys]lastObject]]) {
-            NSLog(@"self.currentPlayer.currentTime: %@ \n lyricArray.currentTime: %@ \n",[self stringWithTime:self.currentPlayer.currentTime],[[dic allKeys]lastObject]);
+//            NSLog(@"self.currentPlayer.currentTime: %@ \n lyricArray.currentTime: %@ \n",[self stringWithTime:self.currentPlayer.currentTime],[[dic allKeys]lastObject]);
             [self.lrcView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
         }
     }
 }
-
-
 
 //点击进度条
 - (IBAction)tapProgress:(UITapGestureRecognizer *)sender {
@@ -316,7 +342,6 @@ static MHMusicList *playingMusic;
     //跟新播放进度
     [self updateCurrentTime];
 }
-
 
 //拖动进度条
 - (IBAction)panSlider:(UIPanGestureRecognizer *)sender {
@@ -435,6 +460,8 @@ static MHMusicList *playingMusic;
     
     //获得随机得到的歌曲
     [MHMusicTool setPlayingMusic:[MHMusicTool randomMusic]];
+    
+    
     
     //播放
     [self startPlayingMusic];

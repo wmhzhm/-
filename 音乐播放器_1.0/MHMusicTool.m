@@ -114,21 +114,18 @@ static  MHMusicList *_playingMusic;
         NSUInteger playingIndex = [self playingIndex];
         //设置本首音乐的索引
         nextIndex = playingIndex;
-        //检查数组越界，如果下一首音乐是最后一首，那么重置为0
-        if (nextIndex>=[self musics].count) {
-            nextIndex=0;
-        }
     }
     return [self musics][nextIndex];
 }
 //随机播放
 + (MHMusicList *)randomMusic
 {
-    NSInteger count = [MHMusicTool musics].count;
+    NSInteger count = [MHMusicTool musics].count - 1;
     NSUInteger randomIndex = (NSUInteger)(0 + (arc4random() % (count - 0 + 1)));
-    while (randomIndex == [self playingIndex]) {
+    while (randomIndex == [self playingIndex] && count != 0) {
        randomIndex = (NSUInteger)(0 + (arc4random() % (count - 0 + 1)));
     }
+    //清空正在播放的音乐，不然随机到本身会一直循环
     return [self musics][randomIndex];
 }
 

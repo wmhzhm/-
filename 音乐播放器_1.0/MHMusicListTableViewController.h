@@ -11,6 +11,6 @@
 @class MHMusicTool;
 @interface MHMusicListTableViewController : UITableViewController
 
-+ (NSMutableArray *)musics;
+//+ (NSMutableArray *)musics;
 
 @end

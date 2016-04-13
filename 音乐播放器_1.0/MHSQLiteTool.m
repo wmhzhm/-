@@ -29,6 +29,7 @@
         //title:分组名 icon:分组图片
         const char *sql = "create table if not exists t_fenZu (title text primary key,icon text);";
         [MHSQLiteTool createTable:sql named:@"t_fenZu"];
+        
         //创建t_music表
         //name:歌名 singer:歌手 filename:歌曲文件名  singericon:歌手图片
         const char *sql_1 = "create table if not exists t_music (name text primary key,signer text,filename text,singericon text)";
