@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B07A5631CC47B9500FA4774 /* MHSearchMusicTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B07A5621CC47B9500FA4774 /* MHSearchMusicTableViewController.m */; };
+		8B07A5661CC482AE00FA4774 /* MHSearchListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B07A5651CC482AE00FA4774 /* MHSearchListModel.m */; };
+		8B07A5691CC4835200FA4774 /* MHJSONTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B07A5681CC4835200FA4774 /* MHJSONTool.m */; };
 		8B29AC741CA91AC800F5652B /* MHPlayingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B29AC721CA91AC800F5652B /* MHPlayingViewController.m */; };
 		8B29AC751CA91AC800F5652B /* MHPlayingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8B29AC731CA91AC800F5652B /* MHPlayingViewController.xib */; };
 		8B2FFFB91CAA86E800533783 /* MHMusicTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2FFFB81CAA86E800533783 /* MHMusicTool.m */; };
@@ -32,7 +35,6 @@
 		8BB6DC071C98F35500AC4787 /* MHTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6DC061C98F35500AC4787 /* MHTabBarController.m */; };
 		8BB6DC0A1C98F3AA00AC4787 /* MHNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6DC091C98F3AA00AC4787 /* MHNavigationController.m */; };
 		8BB6DC0E1C98F3EC00AC4787 /* MHTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6DC0D1C98F3EC00AC4787 /* MHTableViewController.m */; };
-		8BB6DC111C98F43E00AC4787 /* MHOnlineMusicController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6DC101C98F43E00AC4787 /* MHOnlineMusicController.m */; };
 		8BB6DC151C993A1C00AC4787 /* MHFenZuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8BB6DC131C993A1C00AC4787 /* MHFenZuCell.m */; };
 		8BB6DC2D1C993CCA00AC4787 /* 李克勤 - 月半小夜曲.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6DC181C993CCA00AC4787 /* 李克勤 - 月半小夜曲.mp3 */; };
 		8BB6DC2E1C993CCA00AC4787 /* 李克勤.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8BB6DC191C993CCA00AC4787 /* 李克勤.jpg */; };
@@ -88,6 +90,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B07A5611CC47B9500FA4774 /* MHSearchMusicTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSearchMusicTableViewController.h; sourceTree = "<group>"; };
+		8B07A5621CC47B9500FA4774 /* MHSearchMusicTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSearchMusicTableViewController.m; sourceTree = "<group>"; };
+		8B07A5641CC482AE00FA4774 /* MHSearchListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHSearchListModel.h; sourceTree = "<group>"; };
+		8B07A5651CC482AE00FA4774 /* MHSearchListModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHSearchListModel.m; sourceTree = "<group>"; };
+		8B07A5671CC4835200FA4774 /* MHJSONTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHJSONTool.h; sourceTree = "<group>"; };
+		8B07A5681CC4835200FA4774 /* MHJSONTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHJSONTool.m; sourceTree = "<group>"; };
 		8B29AC711CA91AC800F5652B /* MHPlayingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHPlayingViewController.h; sourceTree = "<group>"; };
 		8B29AC721CA91AC800F5652B /* MHPlayingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHPlayingViewController.m; sourceTree = "<group>"; };
 		8B29AC731CA91AC800F5652B /* MHPlayingViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MHPlayingViewController.xib; sourceTree = "<group>"; };
@@ -135,8 +143,6 @@
 		8BB6DC091C98F3AA00AC4787 /* MHNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHNavigationController.m; sourceTree = "<group>"; };
 		8BB6DC0C1C98F3EC00AC4787 /* MHTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHTableViewController.h; sourceTree = "<group>"; };
 		8BB6DC0D1C98F3EC00AC4787 /* MHTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHTableViewController.m; sourceTree = "<group>"; };
-		8BB6DC0F1C98F43E00AC4787 /* MHOnlineMusicController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHOnlineMusicController.h; sourceTree = "<group>"; };
-		8BB6DC101C98F43E00AC4787 /* MHOnlineMusicController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHOnlineMusicController.m; sourceTree = "<group>"; };
 		8BB6DC121C993A1C00AC4787 /* MHFenZuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHFenZuCell.h; sourceTree = "<group>"; };
 		8BB6DC131C993A1C00AC4787 /* MHFenZuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHFenZuCell.m; sourceTree = "<group>"; };
 		8BB6DC181C993CCA00AC4787 /* 李克勤 - 月半小夜曲.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "李克勤 - 月半小夜曲.mp3"; sourceTree = "<group>"; };
@@ -301,6 +307,8 @@
 				8BB6DC481C99524A00AC4787 /* MHFenZuFrame.m */,
 				8B850F961CA296E20087E932 /* MHMusicList.h */,
 				8B850F971CA296E20087E932 /* MHMusicList.m */,
+				8B07A5641CC482AE00FA4774 /* MHSearchListModel.h */,
+				8B07A5651CC482AE00FA4774 /* MHSearchListModel.m */,
 				8B8C59901CB4AB9600C784F3 /* MHLrc.h */,
 				8B8C59911CB4AB9600C784F3 /* MHLrc.m */,
 			);
@@ -332,10 +340,10 @@
 				8BB6DC091C98F3AA00AC4787 /* MHNavigationController.m */,
 				8BB6DC0C1C98F3EC00AC4787 /* MHTableViewController.h */,
 				8BB6DC0D1C98F3EC00AC4787 /* MHTableViewController.m */,
-				8BB6DC0F1C98F43E00AC4787 /* MHOnlineMusicController.h */,
-				8BB6DC101C98F43E00AC4787 /* MHOnlineMusicController.m */,
 				8B84CB3B1CA28315000078DC /* MHMusicListTableViewController.h */,
 				8B84CB3C1CA28315000078DC /* MHMusicListTableViewController.m */,
+				8B07A5611CC47B9500FA4774 /* MHSearchMusicTableViewController.h */,
+				8B07A5621CC47B9500FA4774 /* MHSearchMusicTableViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -356,6 +364,8 @@
 				8B2FFFBB1CAB5F5800533783 /* MHAudioTool.m */,
 				8B8C59931CB4ABD600C784F3 /* MHLrcTool.h */,
 				8B8C59941CB4ABD600C784F3 /* MHLrcTool.m */,
+				8B07A5671CC4835200FA4774 /* MHJSONTool.h */,
+				8B07A5681CC4835200FA4774 /* MHJSONTool.m */,
 			);
 			name = Other;
 			sourceTree = "<group>";
@@ -590,13 +600,16 @@
 				8B9D616F1CB2A9AF0015C4E3 /* UIImage+MJ.m in Sources */,
 				8BE748841CBA68EF00184630 /* MASConstraint.m in Sources */,
 				8B850F9B1CA2A78D0087E932 /* MHMusicListCell.m in Sources */,
+				8B07A5661CC482AE00FA4774 /* MHSearchListModel.m in Sources */,
 				8B29AC741CA91AC800F5652B /* MHPlayingViewController.m in Sources */,
 				8BB6DBD51C98F2B700AC4787 /* ViewController.m in Sources */,
 				8B5C30DB1C9FD68000DBB050 /* MHSQLiteTool.m in Sources */,
 				8B8C59951CB4ABD600C784F3 /* MHLrcTool.m in Sources */,
 				8BE748861CBA68EF00184630 /* MASLayoutConstraint.m in Sources */,
 				8BE7488B1CBA68EF00184630 /* View+MASAdditions.m in Sources */,
+				8B07A5691CC4835200FA4774 /* MHJSONTool.m in Sources */,
 				8B5C30E11CA02AB000DBB050 /* MHFenZu.m in Sources */,
+				8B07A5631CC47B9500FA4774 /* MHSearchMusicTableViewController.m in Sources */,
 				8BB6DBD21C98F2B700AC4787 /* AppDelegate.m in Sources */,
 				8BB6DC151C993A1C00AC4787 /* MHFenZuCell.m in Sources */,
 				8B84CB3D1CA28315000078DC /* MHMusicListTableViewController.m in Sources */,
@@ -605,7 +618,6 @@
 				8BE748851CBA68EF00184630 /* MASConstraintMaker.m in Sources */,
 				8BB6DC491C99524A00AC4787 /* MHFenZuFrame.m in Sources */,
 				8BB6DBCF1C98F2B700AC4787 /* main.m in Sources */,
-				8BB6DC111C98F43E00AC4787 /* MHOnlineMusicController.m in Sources */,
 				8B2FFFBC1CAB5F5800533783 /* MHAudioTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -137,10 +137,14 @@
 //设置cell的编辑图标
 -(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (tableView.editing) {//处于编辑状态，判断行数是否最后一行
     if (indexPath.row == self.fenZuFrame.count) {
         return UITableViewCellEditingStyleInsert;
     }else{
         return UITableViewCellEditingStyleDelete;
+    }
+    }else{//不处于编辑状态，cell状态不变
+        return UITableViewCellEditingStyleNone;
     }
 }
 //实现cell的插入与删除

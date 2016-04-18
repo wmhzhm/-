@@ -279,7 +279,7 @@
                 <constraint firstAttribute="trailing" secondItem="eml-yV-MSR" secondAttribute="trailing" id="vLR-aL-MGD"/>
                 <constraint firstItem="t5m-lD-ha0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xve-PX-Xx0"/>
             </constraints>
-            <point key="canvasLocation" x="-1166" y="-147"/>
+            <point key="canvasLocation" x="-1039" y="-190"/>
         </view>
         <panGestureRecognizer minimumNumberOfTouches="1" id="V2f-69-X6m">
             <connections>
