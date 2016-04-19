@@ -7,10 +7,13 @@
 //
 
 #import "MHJSONTool.h"
-
+@interface MHJSONTool()<NSURLSessionDataDelegate>
+@end
 static NSArray *dictA = nil;
+static NSArray *songA = nil;
 
 @implementation MHJSONTool
+//解析列表数据
 + (NSArray*)JSONWithKeyWords:(NSString*)keyWords
 {
     // 1. URL
@@ -23,9 +26,11 @@ static NSArray *dictA = nil;
      参数:
      timeoutInterval:开发中一定要指定超时时长,默认60秒,通常靠考虑到用户的网络环境,可以设置到10~20秒,不能太长,也不能太短
      */
-    NSLog(@"%@",url);
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data,
+    NSURLSessionConfiguration *session = [NSURLSessionConfiguration defaultSessionConfiguration];
+    NSURLSession *urlSession = [NSURLSession sessionWithConfiguration:session delegate:self delegateQueue:nil];
+    
+    
+    NSURLSessionDataTask *task = [urlSession dataTaskWithURL:url completionHandler:^(NSData * _Nullable data,
                                                                                      NSURLResponse * _Nullable response,
                                                                                      NSError * _Nullable error)
     {
@@ -40,23 +45,45 @@ static NSArray *dictA = nil;
                         dictA = songList;
                     }
     }];
+
     [task resume];
-    
-    
-    
-    
-//    [NSURLConnection sendAsynchronousRequest:request queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-//        if (connectionError) {
-//            NSLog(@"网络不给力,%@",connectionError);
-//            return;
-//        } else {
-//            // 将接收到的二进制数据反序列化为数据字典
-//            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
-//            //去掉两层外壳
-//            NSDictionary *songList = [[dict objectForKey:@"data"] objectForKey:@"song"];
-//            dictA = songList;
-//        }
-//    }];
     return dictA;
+}
+
+
+
+
+//解析歌曲数据
++ (NSString *)loadPathWithSongID:(NSNumber *)songID
+{
+    NSString *loadPath = [[NSString alloc] init];
+    //   歌曲id  http://ting.baidu.com/data/music/links?songIds=mid&format=json
+    NSString *urlStr = [NSString stringWithFormat:@"http://ting.baidu.com/data/music/links?songIds=%@&format=json",songID];
+    NSURL *url = [NSURL URLWithString:urlStr];
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionTask *task = [session dataTaskWithURL:url completionHandler:^(NSData * _Nullable data,
+                                                                              NSURLResponse * _Nullable response,
+                                                                              NSError * _Nullable error) {
+        if (error) {
+            NSLog(@"网络不给力，%@",error);
+            return;
+        }else
+        {
+            //解析JSON数据
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL];
+            //去掉数据外壳
+            songA = [[dict objectForKey:@"data"] objectForKey:@"songList"];
+        }
+    }];
+    
+    [task resume];
+    return loadPath;
+}
+
+
+#pragma mark - dataTask delegate
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data
+{
+    NSLog(@"finish");
 }
 @end

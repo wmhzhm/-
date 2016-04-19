@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+
 @interface MHJSONTool : NSObject
 + (NSArray*)JSONWithKeyWords:(NSString*)keyWords;
++ (NSString *)loadPathWithSongID:(NSNumber *)songID;
 @end

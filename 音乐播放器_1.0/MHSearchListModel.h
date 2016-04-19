@@ -9,22 +9,21 @@
 #import <Foundation/Foundation.h>
 
 @interface MHSearchListModel : NSObject
-
+//比特率
 @property (copy ,nonatomic) NSString *bitrate_fee;
+//未知
 @property (strong ,nonatomic) NSNumber *yyr_artist;
+//歌名
 @property (copy ,nonatomic) NSString *songname;
+//歌手名
 @property (copy ,nonatomic) NSString *artistname;
+//歌曲id
 @property (strong ,nonatomic) NSNumber *songid;
+//是否有mv
 @property (assign ,nonatomic) BOOL has_mv;
+//id解码数
 @property (copy ,nonatomic) NSString *encrypted_songid;
 
+//根据字典加载模型
 - (instancetype)initWithDict:(NSDictionary *)dict;
 @end
-
-//{"bitrate_fee":"{\"0\":\"0|0\",\"1\":\"0|0\"}",
-//    "yyr_artist":"1",
-//    "songname":"小苹果",
-//    "artistname":"俺酱",
-//    "songid":"73899871",
-//    "has_mv":"0",
-//    "encrypted_songid":""}
