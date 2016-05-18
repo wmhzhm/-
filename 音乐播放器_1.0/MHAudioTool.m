@@ -58,7 +58,18 @@ static NSMutableDictionary *_soundIDs;
          //2.如果播放器没有创建，那么就进行初始化
          if (!player) {
                  //2.1音频文件的URL
-                 NSURL *url=[[NSBundle mainBundle]URLForResource:fileName withExtension:nil];
+             
+////           NSURL *url=[[NSBundle mainBundle]URLForResource:fileName withExtension:nil];
+//             NSArray  *paths  =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+//             
+//             NSString *docDir = [paths objectAtIndex:0];
+//             
+//             NSString *filePath = [docDir stringByAppendingPathComponent:fileName];
+//             NSURL *url1 = [NSURL URLWithString:filePath];
+             NSFileManager *manager = [NSFileManager defaultManager];
+             NSURL *url1 = [[manager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] firstObject];
+             NSURL *url = [url1 URLByAppendingPathComponent:fileName];
+//             UIManagedDocument *managedDocument = [[UIManagedDocument alloc]initWithFileURL:path2];
              if (!url){
                 return nil;//如果url为空，那么直接返回空
              }

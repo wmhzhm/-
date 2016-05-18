@@ -15,7 +15,7 @@
 #import "MHLrc.h"
 #import "SYBlendLabel.h"
 #import "MHLrcTool.h"
-
+#import "UIImageView+WebCache.h"
 
 #define progressPadding 10
 #define slider_Y self.slider.center.y
@@ -72,22 +72,31 @@ static MHMusicList *playingMusic;
 //static NSString *loopSet;
 
 //static AVAudioPlayer *player;
+static MHPlayingViewController* _instance = nil;
++(instancetype) shareInstance
+{
+    static dispatch_once_t onceToken ;
+    dispatch_once(&onceToken, ^{
+        _instance = [[self alloc] init] ;
+    }) ;
+    
+    return _instance ;
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
 //  self.scrollerView.contentSize = CGSizeMake(self.view.bounds.size.width * 2, 0);
-    [self.scrollerView setContentSize:CGSizeMake(self.view.bounds.size.width * 2, 0)];
-    NSLog(@"ContentSize :%@",NSStringFromCGSize(self.scrollerView.contentSize));
+//    [self.scrollerView setContentSize:CGSizeMake(self.view.bounds.size.width * 2, 0)];
+//    NSLog(@"ContentSize :%@",NSStringFromCGSize(self.scrollerView.contentSize));
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     // Do any additional setup after loading the view from its nib.
-   //    self.loopLabel.layer.backgroundColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
-    
+    //    self.loopLabel.layer.backgroundColor = (__bridge CGColorRef _Nullable)([UIColor blackColor]);
     [self settingView];
 }
 
@@ -198,7 +207,7 @@ static MHMusicList *playingMusic;
 {
     UIWindow *window=[UIApplication sharedApplication].keyWindow;
     window.userInteractionEnabled=NO;
- 
+    
     //2.添加播放界面
      //设置View的大小为覆盖整个窗口
     self.view.frame=window.bounds;
@@ -218,18 +227,49 @@ static MHMusicList *playingMusic;
           self.view.alpha = 1;
          } completion:^(BOOL finished) {
              //  设置音乐数据
-             [self startPlayingMusic];
+             if ([MHMusicTool isOnline]) {
+                 [self startPlayingOnlineMusic];//播放网络歌曲
+             }else{
+             [self startPlayingMusic];//播放本地歌曲
+             }
               window.userInteractionEnabled=YES;
          }];
 }
-
+#pragma mark - 在线音乐
+//播放在线音乐
+- (void)startPlayingOnlineMusic
+{
+    if (playingMusic == [MHMusicTool playingMusic]) {
+        [self addCurrentTimeTimer];
+        //如果是正在播放的音乐则直接返回
+        return;
+    }
+    //设置歌词(未实现)
+    
+    playingMusic = [MHMusicTool playingMusic];
+    
+    self.lyricArray = [MHLrcTool parserLyricWithName:playingMusic.lrcName];
+    self.lrcView.delegate = self;
+    self.lrcView.dataSource = self;
+    [self.lrcView reloadData];
+    
+    [self.iconView setImageWithURL:[NSURL URLWithString:[MHMusicTool playingMusic].singerIcon]];
+    
+    //开始播放在线音乐
+    AVAudioPlayer *player = [MHAudioTool playMusic:playingMusic.fileName];
+    player.delegate = self;
+    self.currentPlayer = player;
+    //设置时长
+    self.totalTimeLabel.text = [self stringWithTime:self.currentPlayer.duration];
+    //添加定时器
+    [self addCurrentTimeTimer];
+}
 
 //重置音乐
 -(void)ResetPlayingMusic
 {
          //1.重置界面数据
     self.iconView.image = [UIImage imageNamed:@"playing_background"];
-//    self.iconView.image = [UIImage circleImageWithName:@"playing_background" borderWidth:borderWidthWorth borderColor:[UIColor blackColor]];
         //2.停止播放
         [MHAudioTool stopMusic:playingMusic.fileName];
     //清空播放器
@@ -239,7 +279,7 @@ static MHMusicList *playingMusic;
     
 }
 
-//开始播放
+//开始本地播放
 - (void)startPlayingMusic
 {
     //设置界面数据
@@ -248,15 +288,21 @@ static MHMusicList *playingMusic;
         //如果是正在播放的音乐则直接返回
         return;
     }
-//    self.lyricArray = [SYLyricTool parserLyricWithName:musicModel.lrc];
+    
     playingMusic = [MHMusicTool playingMusic];
     self.lyricArray = [MHLrcTool parserLyricWithName:playingMusic.lrcName];
     self.lrcView.delegate = self;
     self.lrcView.dataSource = self;
     [self.lrcView reloadData];
     
-    self.iconView.image = [UIImage imageNamed:playingMusic.singerIcon];
-//        self.iconView.image = [UIImage circleImageWithName:playingMusic.singerIcon borderWidth:borderWidthWorth borderColor:[UIColor blackColor]];
+//    self.iconView.image = [UIImage imageNamed:playingMusic.singerIcon];
+    NSArray  *paths  =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
+    
+    NSString *docDir = [paths objectAtIndex:0];
+    
+    NSString *filePath = [docDir stringByAppendingPathComponent:playingMusic.singerIcon];
+    self.iconView.image = [UIImage imageWithContentsOfFile:filePath];
+
 #warning 还有部分数据没有设置
     //开始播放
     AVAudioPlayer *player = [MHAudioTool playMusic:playingMusic.fileName];
@@ -309,10 +355,6 @@ static MHMusicList *playingMusic;
     //设置当前播放时间
     self.currentTimeLabel.text = [self stringWithTime:self.currentPlayer.currentTime];
     self.progressView.progress = progress;
-//    NSLog(@"%f,%f",self.player.currentTime,self.player.duration);
-//    if ((int)self.player.currentTime == (int)self.player.duration) {
-//        [self next];
-//    }
     [self updateLyric];
 }
 
@@ -326,7 +368,7 @@ static MHMusicList *playingMusic;
         
         // [[dic allKeys]lastObject]找到字典中的字符串Key
         if ([[self stringWithTime:self.currentPlayer.currentTime] isEqualToString:[[dic allKeys]lastObject]]) {
-//            NSLog(@"self.currentPlayer.currentTime: %@ \n lyricArray.currentTime: %@ \n",[self stringWithTime:self.currentPlayer.currentTime],[[dic allKeys]lastObject]);
+
             [self.lrcView selectRowAtIndexPath:[NSIndexPath indexPathForRow:i inSection:0] animated:YES scrollPosition:UITableViewScrollPositionMiddle];
         }
     }
@@ -385,9 +427,11 @@ static MHMusicList *playingMusic;
     {
         //设置播放器开始播放的时间点
         self.currentPlayer.currentTime=time;
+        
     //添加定时器
     [self addCurrentTimeTimer];
     }
+    [self updateLyric];
 }
 
 //上一首歌曲
@@ -473,8 +517,9 @@ static MHMusicList *playingMusic;
 //播放模式Label显示（渐变消失）
 - (void)loopLabelShowWithModel:(NSString *)model
 {
-    UIWindow *window=[UIApplication sharedApplication].keyWindow;
-    window.userInteractionEnabled=NO;
+//    UIWindow *window=[UIApplication sharedApplication].keyWindow;
+//    window.userInteractionEnabled=NO;
+    self.loopBtn.enabled = NO;
     
     self.loopLabel.hidden = NO;
     self.loopLabel.alpha = 0;
@@ -487,7 +532,8 @@ static MHMusicList *playingMusic;
             self.loopLabel.alpha = 0;
         }completion:^(BOOL finished){
             self.loopLabel.hidden = YES;
-                window.userInteractionEnabled = YES;
+//                window.userInteractionEnabled = YES;
+            self.loopBtn.enabled = YES;
         }];
     }];
 }
@@ -516,6 +562,7 @@ static MHMusicList *playingMusic;
     }
     
 }
+
 //播放模式设置
 - (IBAction)loopSetting {
     UIWindow *window=[[UIApplication sharedApplication].windows lastObject];
@@ -583,6 +630,7 @@ static MHMusicList *playingMusic;
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
         cell.backgroundColor = [UIColor clearColor];
         cell.textLabel.textColor = [UIColor whiteColor];
+//        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     NSDictionary *dic = self.lyricArray[indexPath.row];
     

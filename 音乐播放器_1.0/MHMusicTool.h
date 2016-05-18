@@ -13,10 +13,16 @@
 @interface MHMusicTool : NSObject
 
 
-@property (copy ,nonatomic) NSString *title;
-
-
-//所有的歌曲
+@property (strong ,nonatomic) NSString *title;
+//是否为网络歌曲
++ (BOOL)isOnline;
+//存储网络歌曲列表
++ (void)setOnlineMusicListWithArray:(NSArray *)array;
+//获取网络歌曲列表
++ (NSArray *)musicsOnline;
+//设置网络音乐曲目
++ (void)setOnlinePlayingMusic:(MHMusicList *)playingMusic;
+//本地所有的歌曲
 + (NSArray *)musics;
 //返回播放歌曲所在组的内部序列
 + (NSUInteger)playingIndex;

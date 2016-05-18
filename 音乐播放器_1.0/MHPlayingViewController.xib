@@ -167,8 +167,8 @@
                                 <outletCollection property="gestureRecognizers" destination="uZb-bU-aQa" appends="YES" id="DQd-4U-vtS"/>
                             </connections>
                         </progressView>
-                        <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sbp-Tx-Vc2" userLabel="滑块">
-                            <rect key="frame" x="7" y="0.0" width="20" height="20"/>
+                        <button opaque="NO" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sbp-Tx-Vc2" userLabel="滑块">
+                            <rect key="frame" x="5" y="-5" width="20" height="20"/>
                             <gestureRecognizers/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="a3G-96-BBE"/>
@@ -256,7 +256,9 @@
                         <constraint firstItem="q49-bD-b0d" firstAttribute="centerY" secondItem="Rj4-fd-b2I" secondAttribute="centerY" id="E19-fy-Etg"/>
                         <constraint firstItem="V78-ms-I5c" firstAttribute="top" secondItem="Rj4-fd-b2I" secondAttribute="top" constant="20" id="Frb-fH-Cgn"/>
                         <constraint firstAttribute="trailing" secondItem="Gyw-gN-Dnr" secondAttribute="trailing" constant="10" id="Vhe-sb-t3N"/>
+                        <constraint firstItem="Sbp-Tx-Vc2" firstAttribute="top" secondItem="Rj4-fd-b2I" secondAttribute="top" constant="-5" id="VtY-aB-wME"/>
                         <constraint firstItem="WAx-0K-TVb" firstAttribute="centerY" secondItem="Rj4-fd-b2I" secondAttribute="centerY" id="XM9-S7-HMq"/>
+                        <constraint firstItem="Sbp-Tx-Vc2" firstAttribute="leading" secondItem="Rj4-fd-b2I" secondAttribute="leading" constant="5" id="XV1-jg-cOZ"/>
                         <constraint firstItem="H8g-wS-JQk" firstAttribute="leading" secondItem="Rj4-fd-b2I" secondAttribute="leading" constant="10" id="dTZ-Bz-hhD"/>
                         <constraint firstItem="V78-ms-I5c" firstAttribute="centerX" secondItem="Rj4-fd-b2I" secondAttribute="centerX" id="eRk-UT-aMh"/>
                         <constraint firstItem="WAx-0K-TVb" firstAttribute="leading" secondItem="Rj4-fd-b2I" secondAttribute="leading" constant="40" id="pFM-j9-FJ2"/>
@@ -279,7 +281,7 @@
                 <constraint firstAttribute="trailing" secondItem="eml-yV-MSR" secondAttribute="trailing" id="vLR-aL-MGD"/>
                 <constraint firstItem="t5m-lD-ha0" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xve-PX-Xx0"/>
             </constraints>
-            <point key="canvasLocation" x="-1039" y="-190"/>
+            <point key="canvasLocation" x="-1522" y="-231"/>
         </view>
         <panGestureRecognizer minimumNumberOfTouches="1" id="V2f-69-X6m">
             <connections>

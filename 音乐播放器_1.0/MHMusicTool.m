@@ -8,7 +8,9 @@
 
 #import "MHMusicTool.h"
 #import "MHMusicList.h"
+#import "MHSearchListModel.h"
 #import "MHSQLiteTool.h"
+#import "MHsongInf.h"
 #import "MHMusicListTableViewController.h"
 
 
@@ -16,10 +18,47 @@
 
 static NSString *title_static;
 static NSString *playing_title;
+static NSArray *onlineMusicList;
 static  MHMusicList *_playingMusic;
+static bool isOnline = NO;
+
+
+//存储网络歌曲列表
++ (void)setOnlineMusicListWithArray:(NSArray *)array
+{
+    onlineMusicList = array;
+}
+
++ (BOOL)isOnline
+{
+    return isOnline;
+}
+
+//返回网络歌曲列表
++ (NSArray *)musicsOnline
+{
+    isOnline = YES;
+    NSMutableArray *arrayM = [NSMutableArray array];
+    for (MHsongInf *musicInf in onlineMusicList) {
+        //将模型转换
+        MHMusicList *music = [[MHMusicList alloc] init];
+        music.singName = musicInf.songName;
+        music.singer = musicInf.artistName;
+//        music.fileName = [NSString stringWithFormat:@"%@.%@",musicInf.songName,musicInf.format];
+        //此处以url的形式，让其方便媒体流播放
+        music.fileName = musicInf.songLink;
+        music.singerIcon = musicInf.songPicBig;
+        music.lrcName = musicInf.lrcLink;
+        [arrayM addObject:music];
+    }
+    return [arrayM copy];
+}
+
+
 //返回所有列表内音乐
 + (NSArray *)musics
 {
+    isOnline = NO;
     NSArray *dictArray = [MHSQLiteTool musicListWithTitle:title_static];
     NSMutableArray *musicLists = [NSMutableArray array];
     for (MHMusicList *musicList in dictArray) {
@@ -39,15 +78,31 @@ static  MHMusicList *_playingMusic;
 {
     return _playingMusic;
 }
-
-//- (BOOL)playingMusic:(MHMusicList*)playingMusic isEqual:(MHMusicList *)musicInList
-//{
-//    if (playingMusic.singName == musicInList.singName/*数据库里singName是主键所以不会存在重复名字*/) {
-//        return YES;
-//    }
-//    return NO;
-//}
-
+//设置网络歌曲曲目
++ (void)setOnlinePlayingMusic:(MHMusicList *)playingMusic
+{
+    NSArray *music = [self musicsOnline];
+    BOOL isContains = NO;
+    //因为isContant是比较对象地址，而这里需要比较值，所以采用提取名字字符串(主键不会有相同的)的方法来比较
+    for (MHMusicList *musicInList  in music) {
+        NSString *playingName = playingMusic.singName;
+        NSString *musicInListName = musicInList.singName;
+        if ([playingName isEqualToString:musicInListName]) {
+            isContains = YES;
+            break;
+        }
+    }
+    BOOL isExists = playingMusic;
+    if (!isExists || !isContains){
+        return;
+    }
+    if (_playingMusic == playingMusic)
+    {
+        return;
+    }
+    _playingMusic=playingMusic;
+}
+//设置本地歌曲曲目
 + (void)setPlayingMusic:(MHMusicList *)playingMusic
 {
     NSArray *music = [self musics];
@@ -129,12 +184,6 @@ static  MHMusicList *_playingMusic;
     return [self musics][randomIndex];
 }
 
-
-//-(int)getRandomNumber:(int)from to:(int)to
-//
-//{
-//    return (int)(from + (arc4random() % (to - from + 1)));
-//}
 //上一首歌曲
 + (MHMusicList *)perviousMusic
 {

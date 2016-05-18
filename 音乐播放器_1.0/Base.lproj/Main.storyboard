@@ -103,8 +103,14 @@
                             <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
+                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="TKA-jO-fM4">
+                                    <rect key="frame" x="290" y="12" width="20" height="20"/>
+                                </activityIndicatorView>
                                 <textField opaque="NO" clipsSubviews="YES" alpha="0.80000000000000004" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mgV-Bn-cKf">
                                     <rect key="frame" x="20" y="7" width="490" height="30"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="30" id="Lx6-nT-L7S"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                     <textInputTraits key="textInputTraits"/>
                                     <connections>
@@ -115,6 +121,8 @@
                                     <rect key="frame" x="530" y="7" width="50" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="Eco-1R-aqM"/>
+                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="M3d-vw-3kQ"/>
+                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="50" id="q0b-X2-iwH"/>
                                         <constraint firstAttribute="width" constant="50" id="ywI-f7-Myw"/>
                                     </constraints>
                                     <state key="normal" title="搜索"/>
@@ -125,11 +133,11 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="mgV-Bn-cKf" firstAttribute="centerY" secondItem="meG-hw-p05" secondAttribute="centerY" id="ExA-i4-dbd"/>
-                                <constraint firstItem="mgV-Bn-cKf" firstAttribute="leading" secondItem="meG-hw-p05" secondAttribute="leading" constant="20" id="O81-FH-Dvy"/>
-                                <constraint firstItem="uUI-4v-wDf" firstAttribute="centerY" secondItem="meG-hw-p05" secondAttribute="centerY" id="cyJ-h4-Mio"/>
-                                <constraint firstAttribute="trailing" secondItem="uUI-4v-wDf" secondAttribute="trailing" constant="20" id="rI0-rZ-TxH"/>
-                                <constraint firstItem="uUI-4v-wDf" firstAttribute="leading" secondItem="mgV-Bn-cKf" secondAttribute="trailing" constant="20" id="uQc-8r-BXi"/>
+                                <constraint firstAttribute="trailing" secondItem="uUI-4v-wDf" secondAttribute="trailing" constant="20" id="6Jo-jN-w1F"/>
+                                <constraint firstItem="uUI-4v-wDf" firstAttribute="top" secondItem="meG-hw-p05" secondAttribute="top" constant="7" id="By9-5Z-YxZ"/>
+                                <constraint firstItem="uUI-4v-wDf" firstAttribute="leading" secondItem="mgV-Bn-cKf" secondAttribute="trailing" constant="20" id="FsL-BN-ZKm"/>
+                                <constraint firstItem="mgV-Bn-cKf" firstAttribute="leading" secondItem="meG-hw-p05" secondAttribute="leading" constant="20" id="cjC-VP-uP8"/>
+                                <constraint firstItem="mgV-Bn-cKf" firstAttribute="top" secondItem="meG-hw-p05" secondAttribute="top" constant="7" id="jWn-M9-JdS"/>
                             </constraints>
                         </view>
                         <prototypes>
@@ -149,6 +157,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="网络音乐" id="rbK-Pi-tmZ"/>
                     <connections>
+                        <outlet property="headView" destination="meG-hw-p05" id="rwV-17-LIX"/>
+                        <outlet property="indicatorView" destination="TKA-jO-fM4" id="Qqz-60-9vo"/>
                         <outlet property="searchTextField" destination="mgV-Bn-cKf" id="Bwn-YN-J5W"/>
                     </connections>
                 </tableViewController>

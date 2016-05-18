@@ -15,10 +15,14 @@
 + (NSArray *)parserLyricWithName:(NSString *)lycName
 {
     //加载本地歌词文件
-    NSString *path = [[NSBundle mainBundle]pathForResource:lycName ofType:nil];
+//    NSString *path = [[NSBundle mainBundle]pathForResource:lycName ofType:nil];
+    NSArray  *paths  =  NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask,YES);
     
+    NSString *docDir = [paths objectAtIndex:0];
+    
+    NSString *filePath = [docDir stringByAppendingPathComponent:lycName];
     NSError *error;
-    NSString *lyricStr = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:&error];
+    NSString *lyricStr = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&error];
     if (error) {
         NSLog(@"error: %@",error);
     }

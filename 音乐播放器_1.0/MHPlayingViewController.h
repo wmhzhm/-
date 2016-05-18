@@ -10,5 +10,5 @@
 #import <AVFoundation/AVFoundation.h>
 @interface MHPlayingViewController : UIViewController
 - (void)show;
-
++(instancetype) shareInstance;
 @end
