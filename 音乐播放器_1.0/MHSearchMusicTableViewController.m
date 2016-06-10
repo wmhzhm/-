@@ -13,6 +13,9 @@
 #import "MHsongInf.h"
 #import "MHMusicTool.h"
 #import "MCDataEngine.h"
+#import "MHMusicList.h"
+#import "MHDownloader.h"
+#import "MHSQLiteTool.h"
 
 @interface MHSearchMusicTableViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,NSURLSessionDataDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *searchTextField;
@@ -65,15 +68,16 @@
 - (void)downloadSing:(id)sender
 {
     UITableViewCell * cell = (UITableViewCell *)[sender superview];
-    UIButton *clicledBtn = (UIButton*)[sender self];
+//    UIButton *clicledBtn = (UIButton*)[sender self];
     NSIndexPath * path = [self.tableView indexPathForCell:cell];
     NSLog(@"%ld",(long)[path row]);
     NSInteger rows = [path row];
     MHMusicList *downloadMusicList = [MHMusicTool musicsOnline][rows];
-    NSLog(@"获取数据%@",downloadMusicList);
+//    NSLog(@"获取数据%@",downloadMusicList);
     //根据模型下载数据
-    clicledBtn.enabled = NO;
-    MCDataEngine * network = [MCDataEngine new];
+//    clicledBtn.enabled = NO;
+    
+    [MHDownloader downloadmusic:downloadMusicList WithMusicName:downloadMusicList.singName];
     
 }
 
@@ -233,7 +237,7 @@
 //搜索按钮
 - (IBAction)clickSearchBtn {
     [self.view endEditing:YES];
-
+    
    [self JSONWithKeyWords:self.searchTextField.text];
 }
 @end

@@ -31,6 +31,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *currentTimeLabel;//当前时间
 @property (weak, nonatomic) IBOutlet UILabel *totalTimeLabel;//总时长
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;//进度条
+@property (weak, nonatomic) IBOutlet UIButton *backBtn;
 @property (weak, nonatomic) IBOutlet UIImageView *iconView;//背景图片
 //@property (strong ,nonatomic) MHMusicList *playingMusic;
 @property (weak, nonatomic) IBOutlet UIImageView *iconViewBcg;
@@ -110,10 +111,9 @@ static MHPlayingViewController* _instance = nil;
     self.loopLabel.layer.masksToBounds = YES;
     self.loopLabel.layer.cornerRadius = 12;
     self.loopLabel.backgroundColor = [UIColor blackColor];
-
+    
     self.iconView.layer.masksToBounds = YES;
     self.iconView.layer.cornerRadius = 100;
-    
     
     self.iconViewBcg.layer.masksToBounds = YES;
 //    self.iconViewBcg.layer.cornerRadius = 110;
@@ -174,14 +174,13 @@ static MHPlayingViewController* _instance = nil;
     
     UIWindow *window=[UIApplication sharedApplication].keyWindow;
         window.userInteractionEnabled=NO;
-        //2.动画隐藏View
+//        2.动画隐藏View
         [UIView animateWithDuration:0.5 animations:^{
             self.view.alpha = 0;
         } completion:^(BOOL finished) {
-                 window.userInteractionEnabled=YES;
-                     //设置view隐藏能够节省一些性能
-                self.view.hidden=YES;
+              self.view.hidden=YES;
     }];
+    window.userInteractionEnabled = YES;
 }
 
 //歌词控制按钮
@@ -652,7 +651,4 @@ static MHPlayingViewController* _instance = nil;
     
     return cell;
 }
-
-
-
 @end

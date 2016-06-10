@@ -20,6 +20,7 @@
 + (BOOL)initLoopSet;
 + (BOOL)updateLoopSetWithModel:(NSString *)model;
 + (void)createTable:(const char *)sql named:(NSString *)tableName;
++ (void)addDownloadMusic:(MHMusicList *)musicModel;
 
 + (NSString *)loopSetWorth;
 + (NSArray *)fenZu;

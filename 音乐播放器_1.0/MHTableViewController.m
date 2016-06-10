@@ -184,6 +184,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath
        
         //实现数据库增加
         BOOL result = [MHSQLiteTool addFenZu:fenZu];
+            
             if (result) {//数据库添加成功
                 //转换数据模型为Frame模型
                 MHFenZuFrame *fenZuFrame = [[MHFenZuFrame alloc] init];

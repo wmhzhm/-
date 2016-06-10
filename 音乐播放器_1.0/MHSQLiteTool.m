@@ -32,7 +32,7 @@
         
         //创建t_music表
         //name:歌名 singer:歌手 filename:歌曲文件名  singericon:歌手图片
-        const char *sql_1 = "create table if not exists t_music (name text primary key,signer text,filename text,singericon text)";
+        const char *sql_1 = "create table if not exists t_music (name text primary key,signer text,filename text,lrcname text,singericon text)";
         [MHSQLiteTool createTable:sql_1 named:@"t_music"];
         
         //创建关联表t_FM
@@ -47,6 +47,21 @@
         
         }else{
         NSLog(@"打开数据库失败");
+    }
+     //初始化分组
+     const char *sql = "select * from t_fenZu;";
+    sqlite3_stmt *stmt = NULL;
+    sqlite3_prepare_v2(_db, sql, -1, &stmt, NULL);
+    if (sqlite3_step(stmt) == SQLITE_ROW) {
+        return;
+    }else{
+    NSString *sql3 = [NSString stringWithFormat:@"insert into t_fenZu (title,icon) values('%@','%@');",@"下载音乐",@"downloadMusic"];
+        NSString *sql1 = [NSString stringWithFormat:@"insert into t_fenZu (title,icon) values('%@','%@');",@"我的最爱",@"favoriteMusic"];
+     NSString *sql2 = [NSString stringWithFormat:@"insert into t_fenZu (title,icon) values('%@','%@');",@"我的音乐",@"myMusic"];
+    char *errorMes = NULL;
+    sqlite3_exec(_db, sql1.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
+    sqlite3_exec(_db, sql2.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
+    sqlite3_exec(_db, sql3.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
     }
 }
 
@@ -161,6 +176,22 @@
     return musicLists;
 }
 
+//添加下载歌曲数据
++ (void)addDownloadMusic:(MHMusicList *)musicModel
+{
+    NSString *sql = [NSString stringWithFormat:@"insert into t_music (name,signer,filename,lrcname,singericon) values('%@','%@','%@.mp3','%@.lrc','%@.jpg');",musicModel.singName,musicModel.singer,musicModel.singName,musicModel.singName,musicModel.singName];
+    char *errorMes = NULL;
+    int result = sqlite3_exec(_db, sql.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
+    if (result != SQLITE_OK) {
+        NSLog(@"%@",[NSString stringWithUTF8String:errorMes]);
+    }
+    //将歌曲加入下载分组
+    NSString *sql1 = [NSString stringWithFormat:@"insert into t_FM (title,name) values('%@','%@');",@"下载音乐",musicModel.singName];
+    int result1 = sqlite3_exec(_db, sql1.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
+    if (result1 != SQLITE_OK) {
+        NSLog(@"%@",[NSString stringWithUTF8String:errorMes]);
+    }
+}
 
 //删除分组时操作FM表
 + (BOOL)deleteFMWithFenZu:(NSString *)title
