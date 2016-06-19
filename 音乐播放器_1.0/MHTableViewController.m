@@ -13,6 +13,7 @@
 #import <sqlite3.h>
 #import "MHSQLiteTool.h"
 #import "MHMusicListTableViewController.h"
+#import "MHMusicTool.h"
 
 @interface MHTableViewController ()<UITableViewDelegate,UITableViewDataSource,UITextFieldDelegate>
 
@@ -116,6 +117,8 @@
     MHFenZuFrame *fenZuFrame = [self.fenZuFrame objectAtIndex:indexPath.row];
     NSString *selectName = fenZuFrame.fenZu.title;
     musicListController.title = selectName;
+    MHMusicTool *musicTool = [[MHMusicTool alloc] init];
+    musicTool.title = selectName;
     
     [self.navigationController pushViewController:musicListController animated:YES];
 }

@@ -38,4 +38,7 @@
 + (MHMusicList *)replayMusic;
 //得到列表内随机的音乐
 + (MHMusicList *)randomMusic;
+//得到分组
++ (NSString *)GetTitle;
+
 @end

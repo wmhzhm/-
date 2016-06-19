@@ -54,7 +54,10 @@ static bool isOnline = NO;
     return [arrayM copy];
 }
 
-
++ (NSString *)GetTitle
+{
+    return title_static;
+}
 //返回所有列表内音乐
 + (NSArray *)musics
 {

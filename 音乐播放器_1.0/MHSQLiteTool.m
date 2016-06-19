@@ -193,6 +193,19 @@
     }
 }
 
+//将指定歌曲加入指定分组
++ (void)addMusic:(MHMusicList *)musicModel ToFenZu:(NSString *)title
+{
+        char *errorMes = NULL;
+        //将歌曲加入下载分组
+        NSString *sql1 = [NSString stringWithFormat:@"insert into t_FM (title,name) values('%@','%@');",title,musicModel.singName];
+        int result1 = sqlite3_exec(_db, sql1.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
+        if (result1 != SQLITE_OK) {
+            NSLog(@"%@",[NSString stringWithUTF8String:errorMes]);
+        }
+}
+
+
 //删除分组时操作FM表
 + (BOOL)deleteFMWithFenZu:(NSString *)title
 {

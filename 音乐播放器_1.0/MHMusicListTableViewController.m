@@ -12,10 +12,15 @@
 #import "MHMusicList.h"
 #import "MHPlayingViewController.h"
 #import "MHMusicTool.h"
+#import "MHFenZu.h"
 
 @interface MHMusicListTableViewController ()
 @property (strong ,nonatomic) NSMutableArray *musicList;
 @property (strong ,nonatomic) MHPlayingViewController *playingViewController;
+@property (strong ,nonatomic) UIView *menuViewF;
+@property (strong ,nonatomic) UITableView *menuTableView;
+@property (strong ,nonatomic) NSMutableArray *menuArray;
+@property (strong ,nonatomic) MHMusicList *selectMusic;
 @end
 
 @implementation MHMusicListTableViewController
@@ -74,20 +79,69 @@
     NSIndexPath * path = [self.tableView indexPathForCell:cell];
     NSLog(@"%ld",(long)[path row]);
     NSInteger rows = [path row];
-    MHMusicList *selectMusic = [MHMusicTool musics][rows];
+    self.selectMusic = [MHMusicTool musics][rows];
+    
+    NSArray *array = [MHSQLiteTool fenZu];
+    self.menuArray = [NSMutableArray array];
+    for (MHFenZu *fenZu in array) {
+        NSLog(@"fenZu.title :%@   GetTitle:%@",fenZu.title,[MHMusicTool GetTitle]);
+        if (![fenZu.title isEqualToString:[MHMusicTool GetTitle]]) {
+            [self.menuArray addObject:fenZu];
+        }
+    }
     
     
+    //菜单视图的容器视图
+    self.menuViewF = [[UIView alloc] init];
+    self.menuViewF.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+    self.menuViewF.backgroundColor = [UIColor clearColor];
+    
+    //加载菜单View
+    self.menuTableView = [[UITableView alloc] init];
+    self.menuTableView.frame = CGRectMake(self.view.bounds.size.width * 1 / 8, self.view.bounds.size.height / 3, self.view.bounds.size.width * 6 / 8, 90);
+    self.menuTableView.delegate = self;
+    self.menuTableView.dataSource = self;
+    
+    //加载背景按钮
+    UIButton *buttonCancel = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonCancel.backgroundColor = [UIColor whiteColor];
+    buttonCancel.alpha = 0.5;
+    [buttonCancel addTarget:self action:@selector(clickCalcelBtn) forControlEvents:UIControlEventTouchUpInside];
+    buttonCancel.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
+    
+    [self.view addSubview:self.menuViewF];
+    [self.menuViewF addSubview:buttonCancel];
+    [self.menuViewF addSubview:self.menuTableView];
     
     
+}
+- (void)clickCalcelBtn
+{
+    NSLog(@"clickBtnNamedcancelBtn");
+    [self.menuViewF removeFromSuperview];
 }
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
+    if ([tableView isEqual:self.menuTableView]) {
+        return self.menuArray.count;
+    }else{
     return self.musicList.count;
+    }
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView isEqual:self.menuTableView]) {
+        static NSString *ID = @"menuCell";
+        MHFenZu *fenZu = self.menuArray[indexPath.row];
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+            cell.textLabel.textColor = [UIColor blackColor];
+        }
+        cell.textLabel.text = fenZu.title;
+        return cell;
+    }else{
     static NSString *ID = @"listCell";
     MHMusicList *musicList = self.musicList[indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
@@ -134,12 +188,20 @@
 
     }
     return cell;
+    }
 }
 
 
 #pragma  mark - TableView Delegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if ([tableView isEqual:self.menuTableView]) {
+        //将歌曲加入到分组内
+        MHFenZu *fenZu = self.menuArray[indexPath.row];
+        //将歌曲添加到指定分组
+        [MHSQLiteTool addMusic:self.selectMusic ToFenZu:fenZu.title];
+        [self clickCalcelBtn];
+    }else{
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     //设置播放歌曲数据
     MHMusicTool *musicTool = [[MHMusicTool alloc] init];
@@ -148,6 +210,7 @@
     [MHMusicTool setPlayingMusic:[MHMusicTool musics][indexPath.row]];
     
     [self.playingViewController show];
+    }
 }
 
 
