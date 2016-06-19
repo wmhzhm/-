@@ -65,7 +65,21 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//歌曲分组菜单
+- (void)changeFenZu:(id)sender
+{
+    NSLog(@"clicked Btn");
+    UITableViewCell * cell = (UITableViewCell *)[sender superview];
+    //    UIButton *clicledBtn = (UIButton*)[sender self];
+    NSIndexPath * path = [self.tableView indexPathForCell:cell];
+    NSLog(@"%ld",(long)[path row]);
+    NSInteger rows = [path row];
+    MHMusicList *selectMusic = [MHMusicTool musics][rows];
+    
+    
+    
+    
+}
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -84,8 +98,40 @@
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
         cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:188/255  green:32/255 blue:3/255 alpha:0.11];
         cell.detailTextLabel.text = musicList.singName;
+        
         //设置cell背景透明
         cell.backgroundColor = [UIColor clearColor];
+        
+        UIButton *downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        UIImageView *btnImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"menu_btn"]];
+        btnImage.frame = CGRectMake(0, 0, 30, 30);
+        [downloadBtn addSubview:btnImage];
+        
+        //添加按钮事件
+        [downloadBtn addTarget:self action:@selector(changeFenZu:) forControlEvents:UIControlEventTouchUpInside];
+        [cell addSubview:downloadBtn];
+        downloadBtn.translatesAutoresizingMaskIntoConstraints = NO;
+        
+        //按钮居中
+        [cell addConstraint:[NSLayoutConstraint constraintWithItem:downloadBtn
+                                                         attribute:NSLayoutAttributeCenterY
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:cell
+                                                         attribute:NSLayoutAttributeCenterY
+                                                        multiplier:1
+                                                          constant:0]];
+        //按钮大小
+//        downloadBtn.frame= CGRectMake(0, 0, 20, 20);
+        
+        //距离cell右边距为20像素
+        [cell addConstraint:[NSLayoutConstraint constraintWithItem:downloadBtn
+                                                         attribute:NSLayoutAttributeRight
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:cell
+                                                         attribute:NSLayoutAttributeRight
+                                                        multiplier:1
+                                                          constant:-20]];
+
     }
     return cell;
 }

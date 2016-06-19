@@ -663,6 +663,7 @@
 				TargetAttributes = {
 					8BB6DBC91C98F2B700AC4787 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = 8PD52R9977;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -985,6 +986,8 @@
 			baseConfigurationReference = 893A07B0C093143441318AC0 /* Pods-音乐播放器_1.0.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/音乐播放器_1.0/PrefixHeader.pch";
 				INFOPLIST_FILE = "音乐播放器_1.0/Info.plist";
@@ -992,6 +995,7 @@
 				New_Setting = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.------1-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -1000,6 +1004,8 @@
 			baseConfigurationReference = 6FCF5193671F88DD7312569E /* Pods-音乐播放器_1.0.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/音乐播放器_1.0/PrefixHeader.pch";
 				INFOPLIST_FILE = "音乐播放器_1.0/Info.plist";
@@ -1007,6 +1013,7 @@
 				New_Setting = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "-.------1-0";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

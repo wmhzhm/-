@@ -109,7 +109,7 @@
 //        cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         //添加下载按钮
-        UIButton *downloadBtn = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+        UIButton *downloadBtn = [UIButton buttonWithType:UIButtonTypeCustom];
         [downloadBtn setImage:[UIImage imageNamed:@"download_btn"] forState:UIControlStateNormal];
         //添加按钮事件
         [downloadBtn addTarget:self action:@selector(downloadSing:) forControlEvents:UIControlEventTouchUpInside];

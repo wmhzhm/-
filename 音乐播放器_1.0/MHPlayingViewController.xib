@@ -73,7 +73,7 @@
                                 <action selector="clickLrcBtn" destination="-1" eventType="touchUpInside" id="eQe-E0-mh3"/>
                             </connections>
                         </button>
-                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YdO-51-JJH">
+                        <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YdO-51-JJH" userLabel="滑动视图">
                             <rect key="frame" x="0.0" y="80" width="600" height="400"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XPk-Us-YAS" userLabel="内嵌视图">
