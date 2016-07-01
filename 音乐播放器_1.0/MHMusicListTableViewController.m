@@ -21,6 +21,7 @@
 @property (strong ,nonatomic) UITableView *menuTableView;
 @property (strong ,nonatomic) NSMutableArray *menuArray;
 @property (strong ,nonatomic) MHMusicList *selectMusic;
+@property (strong ,nonatomic) UIView *selectView;
 @end
 
 @implementation MHMusicListTableViewController
@@ -53,14 +54,14 @@
 
 - (NSMutableArray *)musicList
 {
-        if (_musicList == nil) {
-            NSArray *dictArray = [MHSQLiteTool musicListWithTitle:self.title];
+    NSArray *dictArray = [MHSQLiteTool musicListWithTitle:self.title];
+    if (_musicList == nil) {
             NSMutableArray *musicLists = [NSMutableArray array];
             for (MHMusicList *musicList in dictArray) {
                 [musicLists addObject:musicList];
             }
-            _musicList = musicLists;
-        }
+            _musicList = [musicLists copy];
+    }
     return _musicList;
 }
 
@@ -74,6 +75,7 @@
 - (void)changeFenZu:(id)sender
 {
     NSLog(@"clicked Btn");
+    UIWindow *window=[UIApplication sharedApplication].keyWindow;
     UITableViewCell * cell = (UITableViewCell *)[sender superview];
     //    UIButton *clicledBtn = (UIButton*)[sender self];
     NSIndexPath * path = [self.tableView indexPathForCell:cell];
@@ -84,23 +86,45 @@
     NSArray *array = [MHSQLiteTool fenZu];
     self.menuArray = [NSMutableArray array];
     for (MHFenZu *fenZu in array) {
-        NSLog(@"fenZu.title :%@   GetTitle:%@",fenZu.title,[MHMusicTool GetTitle]);
-        if (![fenZu.title isEqualToString:[MHMusicTool GetTitle]]) {
+            if (![fenZu.title isEqualToString:[MHMusicTool GetTitle]]) {
             [self.menuArray addObject:fenZu];
         }
     }
-    
-    
+    CGFloat Width = [[UIScreen mainScreen] bounds].size.width;
+    CGFloat Height = [[UIScreen mainScreen] bounds].size.height;
     //菜单视图的容器视图
     self.menuViewF = [[UIView alloc] init];
     self.menuViewF.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     self.menuViewF.backgroundColor = [UIColor clearColor];
     
-    //加载菜单View
-    self.menuTableView = [[UITableView alloc] init];
-    self.menuTableView.frame = CGRectMake(self.view.bounds.size.width * 1 / 8, self.view.bounds.size.height / 3, self.view.bounds.size.width * 6 / 8, 90);
-    self.menuTableView.delegate = self;
-    self.menuTableView.dataSource = self;
+    //添加操作功能View
+    self.selectView = [[UIView alloc] init];
+    self.selectView.frame = CGRectMake(0, Height, Width, 90);
+    self.selectView.backgroundColor = [UIColor whiteColor];
+    
+    UIButton *deleteBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [deleteBtn setTitle:@"删除歌曲" forState:UIControlStateNormal];
+    [deleteBtn setTitleColor:[UIColor redColor] forState:UIControlStateNormal];
+    deleteBtn.frame = CGRectMake(0, 0, Width, 45);
+    [deleteBtn addTarget:self action:@selector(clickDeleteBtn) forControlEvents:UIControlEventTouchUpInside];
+    [deleteBtn.layer setMasksToBounds:YES];
+    [deleteBtn.layer setCornerRadius:10];
+    [deleteBtn.layer setBorderWidth:1];
+    CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
+    CGColorRef color = CGColorCreate(colorSpaceRef, (CGFloat[]){0,0,0,1});
+    [deleteBtn.layer setBorderColor:color];
+    [self.selectView addSubview:deleteBtn];
+    
+    UIButton *changeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [changeBtn setTitle:@"加入分组" forState:UIControlStateNormal];
+    [changeBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    changeBtn.frame = CGRectMake(0, 45, Width, 45);
+    [changeBtn addTarget:self action:@selector(clickChangeBtn) forControlEvents:UIControlEventTouchUpInside];
+    [changeBtn.layer setMasksToBounds:YES];
+    [changeBtn.layer setCornerRadius:10];
+    [changeBtn.layer setBorderWidth:1];
+    [changeBtn.layer setBorderColor:color];
+    [self.selectView addSubview:changeBtn];
     
     //加载背景按钮
     UIButton *buttonCancel = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -109,11 +133,36 @@
     [buttonCancel addTarget:self action:@selector(clickCalcelBtn) forControlEvents:UIControlEventTouchUpInside];
     buttonCancel.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height);
     
-    [self.view addSubview:self.menuViewF];
+    
+    [window addSubview:self.menuViewF];
     [self.menuViewF addSubview:buttonCancel];
-    [self.menuViewF addSubview:self.menuTableView];
+    [self.menuViewF addSubview:self.selectView];
+
     
+    [UIView animateWithDuration:0.5f animations:^{
+        self.selectView.frame = CGRectMake(0, Height - 90, Width, 90);
+    }];
     
+}
+
+- (void)clickChangeBtn
+{
+    NSLog(@"加入分组");
+    [self.selectView removeFromSuperview];
+    //加载菜单View
+    self.menuTableView = [[UITableView alloc] init];
+    self.menuTableView.frame = CGRectMake(self.view.bounds.size.width * 1 / 8, self.view.bounds.size.height / 3, self.view.bounds.size.width * 6 / 8, 90);
+    self.menuTableView.delegate = self;
+    self.menuTableView.dataSource = self;
+        [self.menuViewF addSubview:self.menuTableView];
+}
+
+- (void)clickDeleteBtn
+{
+    [MHSQLiteTool deleteMusic:self.selectMusic FromFenZu:[MHMusicTool GetTitle]];
+
+    [self.menuViewF removeFromSuperview];
+    [self.tableView reloadData];
 }
 - (void)clickCalcelBtn
 {
@@ -148,7 +197,7 @@
     if (cell == nil) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
         cell.textLabel.text = [NSString stringWithFormat:@"%@",musicList.singName];
-        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+//        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         cell.selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
         cell.selectedBackgroundView.backgroundColor = [UIColor colorWithRed:188/255  green:32/255 blue:3/255 alpha:0.11];
         cell.detailTextLabel.text = musicList.singName;

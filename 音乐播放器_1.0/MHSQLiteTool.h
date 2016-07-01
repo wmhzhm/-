@@ -27,4 +27,5 @@
 +(NSArray *)musicListWithTitle:(NSString *)title;
 //将指定歌曲加入指定分组
 + (void)addMusic:(MHMusicList *)musicModel ToFenZu:(NSString *)title;
++ (void)deleteMusic:(MHMusicList *)musicModel FromFenZu:(NSString *)title;
 @end

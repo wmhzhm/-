@@ -67,6 +67,34 @@
 //下载歌曲
 - (void)downloadSing:(id)sender
 {
+    CGFloat Height = [[UIScreen mainScreen] bounds].size.height;
+    CGFloat Width = [[UIScreen mainScreen] bounds].size.width;
+    //显示开始下载label
+    UILabel *downloadLabel = [[UILabel alloc] init];
+    downloadLabel.hidden = NO;
+    downloadLabel.backgroundColor = [UIColor blackColor];
+    downloadLabel.textColor = [UIColor whiteColor];
+    downloadLabel.textAlignment = NSTextAlignmentCenter;
+    [downloadLabel setText:@"开始下载"];
+    [downloadLabel.layer setMasksToBounds:YES];
+    [downloadLabel.layer setCornerRadius:10];
+    downloadLabel.frame = CGRectMake(Width / 2 - 40, Height / 2 - 15, 80, 30);
+   downloadLabel.alpha = 0;
+    [self.view addSubview:downloadLabel];
+    [UIView animateWithDuration:1 animations:^{
+        downloadLabel.alpha = 1;
+    }completion:^(BOOL finished)
+     {
+         [UIView animateWithDuration:1.0 animations:^{
+             downloadLabel.alpha = 0;
+         }completion:^(BOOL finished){
+             downloadLabel.hidden = YES;
+                 [downloadLabel removeFromSuperview];
+         }];
+     }];
+
+    
+    
     UITableViewCell * cell = (UITableViewCell *)[sender superview];
 //    UIButton *clicledBtn = (UIButton*)[sender self];
     NSIndexPath * path = [self.tableView indexPathForCell:cell];
@@ -204,7 +232,34 @@
                                               listDict = [songInfArray copy];
                                               //保存网络歌曲列表
                                               [MHMusicTool setOnlineMusicListWithArray:listDict];
+                                          //显示下载成功label
+                                          CGFloat Height = [[UIScreen mainScreen] bounds].size.height;
+                                          CGFloat Width = [[UIScreen mainScreen] bounds].size.width;
+                                          //显示开始下载label
+                                          UILabel *downloadLabel = [[UILabel alloc] init];
+                                          downloadLabel.hidden = NO;
+                                          downloadLabel.backgroundColor = [UIColor blackColor];
+                                          downloadLabel.textColor = [UIColor whiteColor];
+                                          downloadLabel.textAlignment = NSTextAlignmentCenter;
+                                          [downloadLabel setText:@"下载成功"];
+                                          [downloadLabel.layer setMasksToBounds:YES];
+                                          [downloadLabel.layer setCornerRadius:10];
+                                          downloadLabel.frame = CGRectMake(Width / 2 - 40, Height / 2 - 15, 80, 30);
+                                          downloadLabel.alpha = 0;
+                                          [self.view addSubview:downloadLabel];
+                                          [UIView animateWithDuration:1 animations:^{
+                                              downloadLabel.alpha = 1;
+                                          }completion:^(BOOL finished)
+                                           {
+                                               [UIView animateWithDuration:1.0 animations:^{
+                                                   downloadLabel.alpha = 0;
+                                               }completion:^(BOOL finished){
+                                                   downloadLabel.hidden = YES;
+                                                   [downloadLabel removeFromSuperview];
+                                               }];
+                                           }];
                                           
+
                                           dispatch_async(dispatch_get_main_queue(), ^{
                                               self.musicListDict = songList;
                                             //刷新界面

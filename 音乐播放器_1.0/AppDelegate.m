@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+#import "MHAudioTool.h"
 
 @interface AppDelegate ()
 
@@ -29,12 +30,15 @@
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     
     //开启后台处理多媒体事件
-//    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-//    AVAudioSession *session=[AVAudioSession sharedInstance];
-//    [session setActive:YES error:nil];
-//    [session setCategory:AVAudioSessionCategoryPlayback error:nil];
-//    UIBackgroundTaskIdentifier _bgTaskId;
-//    _bgTaskId=[AppDelegate backgroundPlayerID:_bgTaskId];
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents]; // 让后台可以处理多媒体的事件
+    
+    NSLog(@"%s",__FUNCTION__);
+    
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    
+    [session setActive:YES error:nil];
+    
+    [session setCategory:AVAudioSessionCategoryPlayback error:nil]; //后台播放
     
 }
 

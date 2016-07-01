@@ -101,6 +101,15 @@
     return result == SQLITE_OK;
 }
 
++ (void)deleteMusic:(MHMusicList *)musicModel FromFenZu:(NSString *)title
+{
+    NSString *sql = [NSString stringWithFormat:@"delete from t_FM where title='%@' and name='%@';",title,musicModel.singName];
+    char *errorMes = NULL;
+    int result = sqlite3_exec(_db, sql.UTF8String/*将NSString转为Char类型*/, NULL, NULL, &errorMes);
+    if (result != SQLITE_OK) {
+        NSLog(@"%@",[NSString stringWithUTF8String:errorMes]);
+    }
+}
 //取得分组数据
 + (NSArray *)fenZu
 {
@@ -139,8 +148,7 @@
     NSMutableArray *musicLists = nil;
     //定义sql语句
 #pragma mark - 未修复SQL注入漏洞
-//    NSString *sql_1 = [NSString stringWithFormat:@"select name from t_FM where title='%@';",title];
-    
+
     NSString *sql_2 = [NSString stringWithFormat:@"select t_music.name,signer,filename,singericon,lrcname from t_music,t_FM where t_music.name = t_FM.name and title='%@';",title];
     const char *sql = sql_2.UTF8String;
     //定义结果集stmt
